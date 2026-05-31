@@ -20,37 +20,72 @@
 extern volatile unsigned long *oc_i2c_audio_addr;
 extern volatile unsigned long *audio_addr;
 
-//i2c initial
+// i2c initial
 void oc_i2c_audio_init(void)
 {
     uint32_t this_data;
-    //clock prescale register... set the frequency 100KHz for I2C ( 50M/(5*100K) = 99)
-    alt_write_word(oc_i2c_audio_addr, 0x16);
-    alt_write_word(oc_i2c_audio_addr + 1, 0x00);
-    //oc_i2c_audio_addr[1] = 0x00;
 
-    //enable the I2C core, but disable the IRQ
-    oc_i2c_audio_addr[2] = 0x80;
+    /*
+     * I2C clock prescale:
+     * SCL = input_clock / (5 * (prescale + 1))
+     *
+     * Para input_clock = 50 MHz y SCL = 100 kHz:
+     * prescale = (50 MHz / (5 * 100 kHz)) - 1
+     * prescale = 99 = 0x0063
+     */
+    const uint16_t prescale = 0x0063;
 
-    //this_data = oc_i2c_audio_addr[0];
-    this_data = alt_read_word(oc_i2c_audio_addr);
-    if ((this_data & 0x00ff) == 0x19)
+    // Deshabilitar el core antes de configurar el prescaler
+    alt_write_word(oc_i2c_audio_addr + 2, 0x00);
+
+    // Prescale low byte
+    alt_write_word(oc_i2c_audio_addr + 0, prescale & 0x00FF);
+
+    // Prescale high byte
+    alt_write_word(oc_i2c_audio_addr + 1, (prescale >> 8) & 0x00FF);
+
+    // Enable I2C core, IRQ disabled
+    alt_write_word(oc_i2c_audio_addr + 2, 0x80);
+
+    // Verificar prescale low byte
+    this_data = alt_read_word(oc_i2c_audio_addr + 0);
+    if ((this_data & 0x00FF) == (prescale & 0x00FF))
     {
-        printf("[INFO] Prescale low byte set is success! \n");
-        this_data = alt_read_word(oc_i2c_audio_addr + 1);
-        if ((this_data & 0x00ff) == 0x00)
-            printf("[INFO] Prescale high byte set is success! \n");
-        else
-            printf("[INFO] Prescale high byte set is NG! \n");
+        printf("[INFO] Prescale low byte set is success! Value = 0x%02X\n",
+               (unsigned int)(this_data & 0x00FF));
     }
     else
-        printf("[INFO] Prescale low byte set is NG! \n");
+    {
+        printf("[INFO] Prescale low byte set is NG! Read = 0x%02X, Expected = 0x%02X\n",
+               (unsigned int)(this_data & 0x00FF),
+               (unsigned int)(prescale & 0x00FF));
+    }
 
-    this_data = oc_i2c_audio_addr[2];
-    if ((this_data & 0x00ff) == 0x80)
-        printf("[INFO] I2C core is enabled! \n");
+    // Verificar prescale high byte
+    this_data = alt_read_word(oc_i2c_audio_addr + 1);
+    if ((this_data & 0x00FF) == ((prescale >> 8) & 0x00FF))
+    {
+        printf("[INFO] Prescale high byte set is success! Value = 0x%02X\n",
+               (unsigned int)(this_data & 0x00FF));
+    }
     else
-        printf("[INFO] I2C core is not enabled! \n");
+    {
+        printf("[INFO] Prescale high byte set is NG! Read = 0x%02X, Expected = 0x%02X\n",
+               (unsigned int)(this_data & 0x00FF),
+               (unsigned int)((prescale >> 8) & 0x00FF));
+    }
+
+    // Verificar que el core quedó habilitado
+    this_data = alt_read_word(oc_i2c_audio_addr + 2);
+    if ((this_data & 0x00FF) == 0x80)
+    {
+        printf("[INFO] I2C core is enabled!\n");
+    }
+    else
+    {
+        printf("[INFO] I2C core is not enabled! Control = 0x%02X\n",
+               (unsigned int)(this_data & 0x00FF));
+    }
 }
 
 //audio i2c write reg
@@ -569,6 +604,7 @@ int init_audio(void)
     usleep(10 * 1000);
     if (bSuccess)
         bSuccess = oc_i2c_audio_wr_reg(4, 0x0015 | 0x20 | 0x08 | 0x01); // Analogue Audio Path Control: set mic as input and enable dac
+        // bSuccess = oc_i2c_audio_wr_reg(4, 0x0010); // Solo DACSEL=1, todo lo demás off
     usleep(10 * 1000);
     if (bSuccess)
         bSuccess = oc_i2c_audio_wr_reg(5, 0x0000); // Digital Audio Path Control: disable soft mute
