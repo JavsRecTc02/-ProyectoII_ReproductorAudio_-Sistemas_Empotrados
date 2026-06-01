@@ -88,7 +88,10 @@ module soc_system (
 	memory_oct_rzqin,
 	oc_i2c_master_0_conduit_start_export_scl,
 	oc_i2c_master_0_conduit_start_export_sda,
-	reset_reset_n);	
+	reset_reset_n,
+	volume_peakmeter_0_external_signals_enc_a,
+	volume_peakmeter_0_external_signals_enc_b,
+	volume_peakmeter_0_external_signals_leds);	
 
 	output		audio_if_0_conduit_end_export_xck;
 	input		audio_if_0_conduit_end_export_adcdat;
@@ -179,4 +182,7 @@ module soc_system (
 	inout		oc_i2c_master_0_conduit_start_export_scl;
 	inout		oc_i2c_master_0_conduit_start_export_sda;
 	input		reset_reset_n;
+	input		volume_peakmeter_0_external_signals_enc_a;
+	input		volume_peakmeter_0_external_signals_enc_b;
+	output	[9:0]	volume_peakmeter_0_external_signals_leds;
 endmodule

@@ -211,10 +211,13 @@ module ghrd_top(
   wire        hps_debug_reset;
   wire [27:0] stm_hw_events;
   wire        fpga_clk_50;
-// connection of internal logics
-  assign LEDR[9:1] = fpga_led_internal;
-  assign stm_hw_events    = {{4{1'b0}}, SW, fpga_led_internal, fpga_debounced_buttons};
-  assign fpga_clk_50=CLOCK_50;
+// fpga_led_internal se mantiene para stm_hw_events pero no va a LEDs fisicos
+  assign stm_hw_events = {{4{1'b0}}, SW, fpga_led_internal, fpga_debounced_buttons};
+  assign fpga_clk_50 = CLOCK_50;
+  
+// Wires para encoder y LEDs del modulo personalizado
+  wire [9:0] peakmeter_leds;
+  assign LEDR = peakmeter_leds;
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -319,8 +322,13 @@ soc_system u0 (
         .audio_if_0_conduit_end_export_daclrc     (AUD_DACLRCK),     //                               .export_daclrc
         .audio_if_0_conduit_end_export_bclk       (AUD_BCLK),       //                               .export_bclk
         .oc_i2c_master_0_conduit_start_export_scl (FPGA_I2C_SCLK), //  oc_i2c_master_0_conduit_start.export_scl
-        .oc_i2c_master_0_conduit_start_export_sda (FPGA_I2C_SDAT)  //                               .export_sda
-    );
+        .oc_i2c_master_0_conduit_start_export_sda (FPGA_I2C_SDAT),  //                               .export_sda
+			// Volume & Peak Meter
+        .volume_peakmeter_0_external_signals_enc_a (GPIO_0[0]),  // Encoder CLK
+        .volume_peakmeter_0_external_signals_enc_b (GPIO_0[1]),  // Encoder DT
+        .volume_peakmeter_0_external_signals_leds  (peakmeter_leds) // LEDs[9:0]
+	 
+	 );
   
 // Debounce logic to clean out glitches within 1ms
 debounce debounce_inst (
@@ -369,27 +377,6 @@ altera_edge_detector pulse_debug_reset (
   defparam pulse_debug_reset.PULSE_EXT = 32;
   defparam pulse_debug_reset.EDGE_TYPE = 1;
   defparam pulse_debug_reset.IGNORE_RST_WHILE_BUSY = 1;
-  
-reg [25:0] counter; 
-reg  led_level;
-always @(posedge fpga_clk_50 or negedge hps_fpga_reset_n)
-begin
-if(~hps_fpga_reset_n)
-begin
-                counter<=0;
-                led_level<=0;
-end
-
-else if(counter==24999999)
-        begin
-                counter<=0;
-                led_level<=~led_level;
-        end
-else
-                counter<=counter+1'b1;
-end
-
-assign LEDR[0]=led_level;
 
 endmodule
 
