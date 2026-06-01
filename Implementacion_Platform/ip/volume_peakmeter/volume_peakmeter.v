@@ -12,17 +12,12 @@ module volume_peakmeter (
     input        enc_a,
     input        enc_b,
 
-    // Audio samples desde HPS (escritura en registro AUDIO)
-    // El peak se calcula internamente
-
     // LEDs
     output reg [9:0] leds
 );
 
 // ================================================================
 // 1. DEBOUNCE DEL ENCODER
-// El KY-040 tiene rebotes mecanicos. Sincronizamos la señal
-// pasandola por 3 flip-flops antes de usarla.
 // ================================================================
 reg [2:0] enc_a_sr, enc_b_sr;
 always @(posedge clk) begin
@@ -34,13 +29,9 @@ wire enc_b_s = enc_b_sr[2];
 
 // ================================================================
 // 2. DECODIFICACION DEL ENCODER
-// El KY-040 genera pulsos en cuadratura: A y B desfasados 90°.
-// Detectamos flanco bajante de A y leemos B para saber direccion:
-//   B=1 al flanco de A → giro horario  → volumen sube
-//   B=0 al flanco de A → giro antihorario → volumen baja
 // ================================================================
 reg enc_a_prev;
-reg [4:0] vol_level; // 0 a 31, inicio en 16 (50%)
+reg [4:0] vol_level;
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -48,7 +39,7 @@ always @(posedge clk or posedge reset) begin
         enc_a_prev <= 1'b1;
     end else begin
         enc_a_prev <= enc_a_s;
-        if (enc_a_prev && !enc_a_s) begin // flanco bajante
+        if (enc_a_prev && !enc_a_s) begin
             if (enc_b_s) begin
                 if (vol_level < 5'd31) vol_level <= vol_level + 1;
             end else begin
@@ -60,41 +51,31 @@ end
 
 // ================================================================
 // 3. PEAK METER
-// El HPS escribe muestras de audio de 16 bits en el registro AUDIO.
-// Calculamos el valor absoluto, lo comparamos con el peak actual,
-// y mapeamos a 8 LEDs con escala logaritmica (como los VU meters
-// reales: cada LED representa el doble de amplitud que el anterior).
 // ================================================================
 reg [15:0] peak_val;
 reg [7:0]  peak_hold_cnt;
 reg [7:0]  peak_leds;
-reg        audio_write_prev;
+reg [15:0] abs_s; // declarado aqui para evitar error Verilog-2001
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
-        peak_val       <= 0;
-        peak_hold_cnt  <= 0;
-        peak_leds      <= 0;
-        audio_write_prev <= 0;
+        peak_val      <= 0;
+        peak_hold_cnt <= 0;
+        peak_leds     <= 0;
+        abs_s         <= 0;
     end else begin
-        // Detectar escritura al registro AUDIO (offset 0x3)
-        audio_write_prev <= (write && address == 2'h3);
-        
         if (write && address == 2'h3) begin
-            // Valor absoluto de muestra 16-bit signed
-            reg [15:0] abs_s;
             abs_s = writedata[15] ? (~writedata[15:0] + 1) : writedata[15:0];
-            
+
             if (abs_s >= peak_val) begin
                 peak_val      <= abs_s;
-                peak_hold_cnt <= 8'd200; // retener peak ~200 muestras
+                peak_hold_cnt <= 8'd200;
             end else if (peak_hold_cnt > 0) begin
                 peak_hold_cnt <= peak_hold_cnt - 1;
             end else if (peak_val > 0) begin
-                peak_val <= peak_val - 16'd64; // decay suave
+                peak_val <= peak_val - 16'd64;
             end
 
-            // Mapeo logaritmico a 8 LEDs
             peak_leds <= (peak_val > 16'h7000) ? 8'hFF :
                          (peak_val > 16'h6000) ? 8'h7F :
                          (peak_val > 16'h4000) ? 8'h3F :
@@ -109,8 +90,6 @@ end
 
 // ================================================================
 // 4. REGISTROS AVALON-MM
-// play_state: 00=stop, 01=play, 10=pause
-// El HPS escribe el estado, el hardware lo muestra en LEDs.
 // ================================================================
 reg [1:0] play_state;
 
@@ -133,15 +112,10 @@ end
 
 // ================================================================
 // 5. CONTROL DE LEDs
-// LEDR[9]: estado reproduccion
-//   - Parpadea a ~1Hz si play
-//   - Fijo encendido si pause  
-//   - Apagado si stop
-// LEDR[8:1]: peak meter (8 LEDs)
-// LEDR[0]: indicador volumen en extremo (max o min)
 // ================================================================
 reg [25:0] blink_cnt;
 reg        blink_out;
+
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         blink_cnt <= 0;
@@ -154,8 +128,8 @@ always @(posedge clk or posedge reset) begin
     end
 end
 
-wire led_state = (play_state == 2'b01) ? blink_out :
-                 (play_state == 2'b10) ? 1'b1 : 1'b0;
+wire led_state   = (play_state == 2'b01) ? blink_out :
+                   (play_state == 2'b10) ? 1'b1 : 1'b0;
 
 wire led_extreme = (vol_level == 5'd31 || vol_level == 5'd0);
 

@@ -1,0 +1,52 @@
+# vlib work
+# ** Warning: (vlib-34) Library already exists at "work".
+#  vlog volume_peakmeter.v volume_peakmeter_tb.v
+# Start time: 23:07:08 on May 31,2026
+# vlog volume_peakmeter.v volume_peakmeter_tb.v 
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# -- Compiling module volume_peakmeter
+# -- Compiling module volume_peakmeter_tb
+# 
+# Top level modules:
+# 	volume_peakmeter_tb
+# End time: 23:07:09 on May 31,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+#  vsim -lib work volume_peakmeter_tb
+# vsim -lib work volume_peakmeter_tb 
+# Start time: 23:07:09 on May 31,2026
+# Loading work.volume_peakmeter_tb
+# Loading work.volume_peakmeter
+#  run -all
+# [t=10000] LEDs cambiaron: 0000000000
+# 
+# === TEST 1: Estado de reproduccion ===
+# [READ] addr=0x1 data=0x00000001
+# [t=450000] LEDs cambiaron: 1000000000
+# [READ] addr=0x1 data=0x00000002
+# [t=710000] LEDs cambiaron: 0000000000
+# [READ] addr=0x1 data=0x00000000
+# 
+# === TEST 2: Volumen inicial ===
+# [READ] addr=0x2 data=0x00000010
+# 
+# === TEST 3: Encoder giro horario (volumen sube) ===
+# [READ] addr=0x2 data=0x00000018
+# 
+# === TEST 4: Encoder giro antihorario (volumen baja) ===
+# [READ] addr=0x2 data=0x00000008
+# 
+# === TEST 5: Peak meter con muestras de audio ===
+# [t=37370000] LEDs cambiaron: 0111111110
+# [READ] addr=0x0 data=0x000000ff
+# 
+# === TEST 6: Verificar LEDs ===
+# [LEDS] leds[9:0] = 0111111110
+#        leds[9]   = 0 (estado reproduccion)
+#        leds[8:1] = 11111111 (peak meter)
+#        leds[0]   = 0 (vol extremo)
+# 
+# === SIMULACION COMPLETA ===
+# ** Note: $finish    : volume_peakmeter_tb.v(168)
+#    Time: 39490 ns  Iteration: 0  Instance: /volume_peakmeter_tb
+# End time: 23:07:09 on May 31,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
