@@ -18,6 +18,7 @@
 #include "audio_control.h"
 #include "pcm.h"
 #include "button_control.h"
+#include "volume_peakmeter.h"
 
 #define HW_REGS_BASE (ALT_STM_OFST)
 #define HW_REGS_SPAN (0x04000000)
@@ -30,6 +31,8 @@ static volatile unsigned long *h2p_lw_axi_addr = NULL;
 volatile unsigned long *oc_i2c_audio_addr = NULL;
 volatile unsigned long *audio_addr = NULL;
 volatile unsigned long *button_pio_addr = NULL;
+
+static uint8_t last_volume = 255; // valor imposible para forzar update inicial
 
 static int has_extension(const char *filename, const char *ext)
 {
@@ -169,6 +172,16 @@ static int get_pcm_file(const char *input_file, char *pcm_file, size_t pcm_file_
     return 0;
 }
 
+void apply_volume_if_changed(void) {
+    uint8_t vol = peakmeter_get_volume(); // 0-31
+    if (vol == last_volume) return;
+    last_volume = vol;
+    // Mapear 0-31 a 0x30-0x7F del WM8731
+    int wm_vol = 0x30 + (int)(vol * (0x7F - 0x30) / 31);
+    AUDIO_SetLineOutVol(wm_vol, wm_vol);
+    printf("[INFO] Volumen: %d/31 (WM8731: 0x%02X)\n", vol, wm_vol);
+}
+
 int main(int argc, char **argv)
 {
     void *virtual_base;
@@ -209,6 +222,8 @@ int main(int argc, char **argv)
     button_pio_addr = virtual_base +
         ((unsigned long)(ALT_LWFPGASLVS_OFST + BUTTON_PIO_BASE) &
          (unsigned long)(HW_REGS_MASK));
+
+    peakmeter_init((void *)h2p_lw_axi_addr);
 
     printf("[INFO] i2c_audio_addr:  %04Xh\n", (unsigned int)oc_i2c_audio_addr);
     printf("[INFO] audio_addr:      %04Xh\n", (unsigned int)audio_addr);
@@ -287,6 +302,9 @@ int main(int argc, char **argv)
         }
 
         printf("[INFO] Now playing: %s\n", songs[current_song]);
+
+        peakmeter_set_play_state(PLAY_STATE_PLAY);
+        apply_volume_if_changed();
 
         PlayResult result = play_PCM(pcm_file);
 

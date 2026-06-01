@@ -6,6 +6,7 @@
 #include "pcm.h"
 #include "audio_control.h"
 #include "button_control.h"
+#include "volume_peakmeter.h"
 
 typedef enum
 {
@@ -24,6 +25,7 @@ PlayResult play_PCM(const char *filename)
 
     uint8_t sample[4];
     PlayerState state = PLAYER_PLAYING;
+    peakmeter_set_play_state(PLAY_STATE_PLAY);
 
     printf("[INFO] Now playing PCM: %s\n", filename);
 
@@ -36,12 +38,14 @@ PlayResult play_PCM(const char *filename)
             if (state == PLAYER_PLAYING)
             {
                 state = PLAYER_PAUSED;
+                peakmeter_set_play_state(PLAY_STATE_PAUSE);
                 printf("[INFO] Paused\n");
                 AUDIO_FifoClear();
             }
             else
             {
                 state = PLAYER_PLAYING;
+                peakmeter_set_play_state(PLAY_STATE_PLAY);
                 printf("[INFO] Playing\n");
             }
 
@@ -100,6 +104,7 @@ PlayResult play_PCM(const char *filename)
             if (events & BTN_PLAY_PAUSE)
             {
                 state = PLAYER_PAUSED;
+                peakmeter_set_play_state(PLAY_STATE_PAUSE);
                 printf("[INFO] Paused\n");
                 AUDIO_FifoClear();
                 usleep(200 * 1000);
@@ -145,6 +150,8 @@ PlayResult play_PCM(const char *filename)
             return PLAY_RESULT_ERROR;
         }
 
+        peakmeter_write_audio_sample(sample_l);
+        apply_volume_if_changed();
         AUDIO_DacFifoSetData(sample_l, sample_r);
     }
 }
