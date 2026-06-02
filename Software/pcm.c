@@ -6,6 +6,8 @@
 #include "pcm.h"
 #include "audio_control.h"
 #include "button_control.h"
+#include "display_control.h"
+#define PCM_SAMPLE_RATE 32000
 
 typedef enum
 {
@@ -13,7 +15,7 @@ typedef enum
     PLAYER_PAUSED
 } PlayerState;
 
-PlayResult play_PCM(const char *filename)
+PlayResult play_PCM(const char *filename, int song_number)
 {
     FILE *fp = fopen(filename, "rb");
     if (fp == NULL)
@@ -21,6 +23,12 @@ PlayResult play_PCM(const char *filename)
         fprintf(stderr, "[ERROR] Open %s failed.\n", filename);
         return PLAY_RESULT_ERROR;
     }
+
+    uint32_t frames_played = 0;
+    int elapsed_seconds = 0;
+    int last_displayed_second = -1;
+
+    display_show_song_time(song_number, 0);
 
     uint8_t sample[4];
     PlayerState state = PLAYER_PLAYING;
@@ -146,5 +154,15 @@ PlayResult play_PCM(const char *filename)
         }
 
         AUDIO_DacFifoSetData(sample_l, sample_r);
+
+        frames_played++;
+
+        elapsed_seconds = frames_played / PCM_SAMPLE_RATE;
+
+        if (elapsed_seconds != last_displayed_second)
+        {
+            display_show_song_time(song_number, elapsed_seconds);
+            last_displayed_second = elapsed_seconds;
+        }
     }
 }

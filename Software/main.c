@@ -18,6 +18,7 @@
 #include "audio_control.h"
 #include "pcm.h"
 #include "button_control.h"
+#include "display_control.h"
 
 #define HW_REGS_BASE (ALT_STM_OFST)
 #define HW_REGS_SPAN (0x04000000)
@@ -30,6 +31,8 @@ static volatile unsigned long *h2p_lw_axi_addr = NULL;
 volatile unsigned long *oc_i2c_audio_addr = NULL;
 volatile unsigned long *audio_addr = NULL;
 volatile unsigned long *button_pio_addr = NULL;
+volatile unsigned long *hex_low_pio_addr = NULL;
+volatile unsigned long *hex_high_pio_addr = NULL;
 
 static int has_extension(const char *filename, const char *ext)
 {
@@ -210,26 +213,30 @@ int main(int argc, char **argv)
         ((unsigned long)(ALT_LWFPGASLVS_OFST + BUTTON_PIO_BASE) &
          (unsigned long)(HW_REGS_MASK));
 
+    hex_low_pio_addr = virtual_base +
+        ((unsigned long)(ALT_LWFPGASLVS_OFST + HEX_LOW_PIO_BASE) &
+        (unsigned long)(HW_REGS_MASK));
+
+    hex_high_pio_addr = virtual_base +
+        ((unsigned long)(ALT_LWFPGASLVS_OFST + HEX_HIGH_PIO_BASE) &
+        (unsigned long)(HW_REGS_MASK));
+
     printf("[INFO] i2c_audio_addr:  %04Xh\n", (unsigned int)oc_i2c_audio_addr);
     printf("[INFO] audio_addr:      %04Xh\n", (unsigned int)audio_addr);
     printf("[INFO] button_pio_addr: %04Xh\n", (unsigned int)button_pio_addr);
+    printf("[INFO] hex_low_pio_addr:  %04Xh\n", (unsigned int)hex_low_pio_addr);
+    printf("[INFO] hex_high_pio_addr: %04Xh\n", (unsigned int)hex_high_pio_addr);
 
     oc_i2c_audio_init();
     init_audio();
     buttons_init();
+    display_init();
 
     usleep(500 * 1000); // Delay necesario antes de iniciar reproducción
 
     AUDIO_SetSampleRate(RATE_ADC32K_DAC32K);
 
-    /*
-     * Si se pasa un argumento:
-     *   ./MyPlayer music
-     *   ./MyPlayer TheDawn.mp3
-     *
-     * Si no se pasa argumento:
-     *   usa "./music" como carpeta por defecto.
-     */
+    // Cargar playlist desde argumento o usar ruta por defecto
     char input_path[MAX_PATH_LEN] = "./music";
 
     if (argc >= 2 && argv[1])
@@ -288,7 +295,13 @@ int main(int argc, char **argv)
 
         printf("[INFO] Now playing: %s\n", songs[current_song]);
 
-        PlayResult result = play_PCM(pcm_file);
+        int duration_seconds = display_get_pcm_duration_seconds(pcm_file);
+
+        printf("[INFO] Duration: %02d:%02d\n",
+            duration_seconds / 60,
+            duration_seconds % 60);
+
+        PlayResult result = play_PCM(pcm_file, current_song + 1);
 
         if (result == PLAY_RESULT_FINISHED)
         {

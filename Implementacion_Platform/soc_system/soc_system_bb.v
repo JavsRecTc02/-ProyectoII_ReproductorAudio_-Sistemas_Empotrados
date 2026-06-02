@@ -88,7 +88,9 @@ module soc_system (
 	memory_oct_rzqin,
 	oc_i2c_master_0_conduit_start_export_scl,
 	oc_i2c_master_0_conduit_start_export_sda,
-	reset_reset_n);	
+	reset_reset_n,
+	hex_low_pio_external_connection_export,
+	hex_high_pio_external_connection_export);	
 
 	output		audio_if_0_conduit_end_export_xck;
 	input		audio_if_0_conduit_end_export_adcdat;
@@ -179,4 +181,6 @@ module soc_system (
 	inout		oc_i2c_master_0_conduit_start_export_scl;
 	inout		oc_i2c_master_0_conduit_start_export_sda;
 	input		reset_reset_n;
+	output	[27:0]	hex_low_pio_external_connection_export;
+	output	[13:0]	hex_high_pio_external_connection_export;
 endmodule

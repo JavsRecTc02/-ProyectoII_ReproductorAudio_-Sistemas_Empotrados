@@ -10,6 +10,6 @@ typedef enum
     PLAY_RESULT_PREVIOUS
 } PlayResult;
 
-PlayResult play_PCM(const char *filename);
+PlayResult play_PCM(const char *filename, int song_number);
 
 #endif

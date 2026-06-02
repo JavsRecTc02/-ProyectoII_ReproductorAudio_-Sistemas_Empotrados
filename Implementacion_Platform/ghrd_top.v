@@ -1,35 +1,4 @@
-// ============================================================================
-// Copyright (c) 2013 by Terasic Technologies Inc.
-// ============================================================================
-//
-// Permission:
-//
-//   Terasic grants permission to use and modify this code for use
-//   in synthesis for all Terasic Development Boards and Altera Development 
-//   Kits made by Terasic.  Other use of this code, including the selling 
-//   ,duplication, or modification of any portion is strictly prohibited.
-//
-// Disclaimer:
-//
-//   This VHDL/Verilog or C/C++ source code is intended as a design reference
-//   which illustrates how these types of functions can be implemented.
-//   It is the user's responsibility to verify their design for
-//   consistency and functionality through the use of formal
-//   verification methods.  Terasic provides no warranty regarding the use 
-//   or functionality of this code.
-//
-// ============================================================================
-//           
-//  Terasic Technologies Inc
-//  9F., No.176, Sec.2, Gongdao 5th Rd, East Dist, Hsinchu City, 30070. Taiwan
-//  
-//  
-//                     web: http://www.terasic.com/  
-//                     email: support@terasic.com
-//
-// ============================================================================
-//Date:  Mon Jun 17 20:35:29 2013
-// ============================================================================
+
 
 `define ENABLE_HPS
 
@@ -211,10 +180,20 @@ module ghrd_top(
   wire        hps_debug_reset;
   wire [27:0] stm_hw_events;
   wire        fpga_clk_50;
+  wire [27:0] hex_low_export;
+  wire [13:0] hex_high_export;
 // connection of internal logics
   assign LEDR[9:1] = fpga_led_internal;
   assign stm_hw_events    = {{4{1'b0}}, SW, fpga_led_internal, fpga_debounced_buttons};
   assign fpga_clk_50=CLOCK_50;
+// Time
+  assign HEX0 = hex_low_export[6:0];
+  assign HEX1 = hex_low_export[13:7];
+  assign HEX2 = hex_low_export[20:14];
+  assign HEX3 = hex_low_export[27:21];
+// Num
+  assign HEX4 = hex_high_export[6:0];
+  assign HEX5 = hex_high_export[13:7];
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -319,7 +298,9 @@ soc_system u0 (
         .audio_if_0_conduit_end_export_daclrc     (AUD_DACLRCK),     //                               .export_daclrc
         .audio_if_0_conduit_end_export_bclk       (AUD_BCLK),       //                               .export_bclk
         .oc_i2c_master_0_conduit_start_export_scl (FPGA_I2C_SCLK), //  oc_i2c_master_0_conduit_start.export_scl
-        .oc_i2c_master_0_conduit_start_export_sda (FPGA_I2C_SDAT)  //                               .export_sda
+        .oc_i2c_master_0_conduit_start_export_sda (FPGA_I2C_SDAT),  //                               .export_sda
+		  .hex_low_pio_external_connection_export   (hex_low_export), // Internal PIO - 7segments
+		  .hex_high_pio_external_connection_export  (hex_high_export)
     );
   
 // Debounce logic to clean out glitches within 1ms

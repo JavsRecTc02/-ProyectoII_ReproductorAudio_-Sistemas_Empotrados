@@ -4,9 +4,9 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Ign)
-		Device PartName(5CSEMA5F31) MfrSpec(OpMask(0) FullPath("C:/fpga/DE1-SoC-MyPlayer-master/soc_system.sof"));
+		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSEMA5F31) Path("C:/fpga/DE1-SoC-MyPlayer-master/") File("soc_system.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSEMA5F31) Path("C:/Users/Javier Tenorio/Documents/GitHub/-Proyecto_II_Co-dise-o-Hardware-Software---Sistemas_Empotrados/Implementacion_Platform/") File("soc_system.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
