@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <unistd.h>
+
+#include "system.h"
+#include "io.h"
+#include "sys/alt_irq.h"
+#include "altera_avalon_pio_regs.h"
+
+volatile uint32_t button_events = 0;
+volatile uint32_t led_state = 0;
+
+static void button_isr(void* context) {
+    uint32_t edge = IORD_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE);
+
+
+    IOWR_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE, edge);
+
+    button_events |= edge;
+
+    if (edge & 0x1) {
+        led_state ^= 0x001;
+    }
+
+    if (edge & 0x2) {
+        led_state ^= 0x002;
+    }
+
+    if (edge & 0x4) {
+        led_state ^= 0x004;
+    }
+
+    if (edge & 0x8) {
+        led_state ^= 0x008;
+    }
+
+    IOWR(LED_PIO_BASE, 0, led_state);
+}
+
+int main(void) {
+    printf("Prueba de interrupciones de botones\n");
+
+
+    IOWR(LED_PIO_BASE, 0, 0x000);
+
+
+    IOWR_ALTERA_AVALON_PIO_EDGE_CAP(BUTTON_PIO_BASE, 0xF);
+
+
+    IOWR_ALTERA_AVALON_PIO_IRQ_MASK(BUTTON_PIO_BASE, 0xF);
+
+
+    alt_ic_isr_register(
+        BUTTON_PIO_IRQ_INTERRUPT_CONTROLLER_ID,
+        BUTTON_PIO_IRQ,
+        button_isr,
+        NULL,
+        NULL
+    );
+
+    printf("Presiona KEY0-KEY3\n");
+
+    while (1) {
+        if (button_events != 0) {
+            printf("Evento botones: 0x%lx\n", button_events);
+            button_events = 0;
+        }
+
+        usleep(100000);
+    }
+
+    return 0;
+}

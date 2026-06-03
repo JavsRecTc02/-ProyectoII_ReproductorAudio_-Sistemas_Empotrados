@@ -1,0 +1,20 @@
+/*
+ * audio_nios.h
+ *
+ *  Created on: 3 de jun. de 2026
+ *      Author: Javier Tenorio
+ */
+
+#ifndef AUDIO_NIOS_H
+#define AUDIO_NIOS_H
+
+#include <stdint.h>
+
+void oc_i2c_audio_init(void);
+int init_audio(void);
+
+int audio_dac_fifo_not_full(void);
+void audio_dac_fifo_set_data(int16_t left, int16_t right);
+void audio_fifo_clear(void);
+
+#endif

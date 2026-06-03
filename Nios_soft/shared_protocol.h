@@ -1,0 +1,87 @@
+/*
+ * shared_protocol.h
+ *
+ *  Created on: 3 de jun. de 2026
+ *      Author: Javier Tenorio
+ */
+
+#ifndef SHARED_PROTOCOL_H
+#define SHARED_PROTOCOL_H
+
+#include <stdint.h>
+
+/*
+ * Shared_RAM = 64 KB = 16384 palabras de 32 bits.
+ *
+ * Header:
+ *   64 palabras = 256 bytes
+ *
+ * Buffer0:
+ *   8160 palabras = 32640 bytes
+ *
+ * Buffer1:
+ *   8160 palabras = 32640 bytes
+ *
+ * Total:
+ *   64 + 8160 + 8160 = 16384 palabras = 65536 bytes
+ */
+
+#define SHM_MAGIC              0
+#define SHM_VERSION            1
+#define SHM_COMMAND            2
+#define SHM_STATUS             3
+#define SHM_FLAGS              4
+#define SHM_SAMPLE_RATE        5
+#define SHM_CHANNELS           6
+#define SHM_BITS_PER_SAMPLE    7
+
+#define SHM_ACTIVE_BUFFER      8
+#define SHM_BUFFER0_SIZE       9   /* cantidad de palabras válidas */
+#define SHM_BUFFER1_SIZE       10
+#define SHM_BUFFER0_READY      11
+#define SHM_BUFFER1_READY      12
+
+#define SHM_COUNTER            13
+#define SHM_UNDERRUNS          14
+#define SHM_LAST_ERROR         15
+#define SHM_TOTAL_WORDS_SENT   16
+#define SHM_TOTAL_WORDS_PLAYED 17
+
+#define SHM_HEADER_WORDS       64
+
+#define SHM_BUFFER_WORDS       8000
+#define SHM_BUFFER0_WORD       SHM_HEADER_WORDS
+#define SHM_BUFFER1_WORD       (SHM_BUFFER0_WORD + SHM_BUFFER_WORDS)
+
+#define MAGIC_VALUE            0xA0D10123u
+#define SHM_VERSION_VALUE      1
+
+#define CMD_NONE               0
+#define CMD_INIT_AUDIO         1
+#define CMD_PLAY_TONE          2
+#define CMD_STOP               3
+#define CMD_PLAY_PCM           4
+
+#define STATUS_BOOTING         0
+#define STATUS_READY           1
+#define STATUS_TONE            2
+#define STATUS_PLAYING         3
+#define STATUS_STOPPED         4
+#define STATUS_ERROR           5
+#define STATUS_WAITING_DATA    6
+#define STATUS_FINISHED        7
+
+#define FLAG_EOF               0x00000001u
+#define FLAG_STOP_REQUEST      0x00000002u
+
+#define ERR_NONE               0
+#define ERR_I2C_TIMEOUT        1
+#define ERR_I2C_NACK           2
+#define ERR_AUDIO_INIT         3
+#define ERR_PCM_UNDERRUN       4
+
+#define PCM_SAMPLE_RATE_HZ     32000u
+#define PCM_CHANNELS           2
+#define PCM_BITS_PER_SAMPLE    16
+
+#endif

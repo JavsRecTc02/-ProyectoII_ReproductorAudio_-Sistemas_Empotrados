@@ -1,0 +1,506 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <unistd.h>
+
+#include "system.h"
+#include "io.h"
+
+/* ============================================================
+ * AUDIO_IF register offsets
+ * ============================================================ */
+#define AUDIO_DAC_LFIFO_PORT   0
+#define AUDIO_DAC_RFIFO_PORT   1
+#define AUDIO_ADC_LFIFO_PORT   2
+#define AUDIO_ADC_RFIFO_PORT   3
+#define AUDIO_CMD_PORT         4
+#define AUDIO_STATUS_PORT      5
+
+#define MASK_STATUS_DAC_FULL   0x01
+
+/* ============================================================
+ * OpenCores I2C register offsets
+ * ============================================================ */
+#define I2C_PRER_LO   0
+#define I2C_PRER_HI   1
+#define I2C_CTR       2
+#define I2C_TXR_RXR   3
+#define I2C_CR_SR     4
+
+#define I2C_CTR_EN    0x80
+
+#define I2C_CR_STA_WR 0x90
+#define I2C_CR_WR     0x10
+#define I2C_CR_STO    0x40
+
+#define I2C_SR_RXACK  0x80
+#define I2C_SR_TIP    0x02
+
+/* ============================================================
+ * Shared_RAM formal structure
+ * ============================================================ */
+#define SHM_MAGIC              0
+#define SHM_VERSION            1
+#define SHM_COMMAND            2
+#define SHM_STATUS             3
+#define SHM_FLAGS              4
+#define SHM_SAMPLE_RATE        5
+#define SHM_CHANNELS           6
+#define SHM_BITS_PER_SAMPLE    7
+
+#define SHM_ACTIVE_BUFFER      8
+#define SHM_BUFFER0_SIZE       9
+#define SHM_BUFFER1_SIZE       10
+#define SHM_BUFFER0_READY      11
+#define SHM_BUFFER1_READY      12
+
+#define SHM_COUNTER            13
+#define SHM_UNDERRUNS          14
+#define SHM_LAST_ERROR         15
+
+#define SHM_HEADER_WORDS       64
+#define SHM_BUFFER_WORDS       8160
+#define SHM_BUFFER0_WORD       SHM_HEADER_WORDS
+#define SHM_BUFFER1_WORD       (SHM_BUFFER0_WORD + SHM_BUFFER_WORDS)
+
+#define MAGIC_VALUE            0xA0D10123u
+
+#define SHM_VERSION_VALUE      1
+
+#define CMD_NONE               0
+#define CMD_INIT_AUDIO         1
+#define CMD_PLAY_TONE          2
+#define CMD_STOP               3
+#define CMD_PLAY_PCM           4
+
+#define STATUS_BOOTING         0
+#define STATUS_READY           1
+#define STATUS_TONE            2
+#define STATUS_PLAYING         3
+#define STATUS_STOPPED         4
+#define STATUS_ERROR           5
+
+#define ERR_NONE               0
+#define ERR_I2C_TIMEOUT        1
+#define ERR_I2C_NACK           2
+#define ERR_AUDIO_INIT         3
+
+#define SAMPLE_RATE_HZ         44100u
+#define TONE_FREQ_HZ           440u
+#define TONE_AMPLITUDE         8000
+
+static volatile int g_stop_tone = 0;
+
+/* ============================================================
+ * Basic Shared_RAM access
+ * ============================================================ */
+static inline void shm_write(uint32_t offset, uint32_t value) {
+    IOWR(SHARED_RAM_BASE, offset, value);
+}
+
+static inline uint32_t shm_read(uint32_t offset) {
+    return IORD(SHARED_RAM_BASE, offset);
+}
+
+/* ============================================================
+ * I2C low-level helpers
+ * ============================================================ */
+static int i2c_wait_tip_clear(void) {
+    uint32_t timeout = 1000000;
+
+    while ((IORD(OC_I2C_MASTER_0_BASE, I2C_CR_SR) & I2C_SR_TIP) && timeout--) {
+        /* wait */
+    }
+
+    if (timeout == 0) {
+        shm_write(SHM_LAST_ERROR, ERR_I2C_TIMEOUT);
+        return 0;
+    }
+
+    return 1;
+}
+
+static int i2c_check_ack(void) {
+    uint32_t status = IORD(OC_I2C_MASTER_0_BASE, I2C_CR_SR);
+
+    if (status & I2C_SR_RXACK) {
+        shm_write(SHM_LAST_ERROR, ERR_I2C_NACK);
+        return 0;
+    }
+
+    return 1;
+}
+
+static int i2c_write_byte(uint8_t data, uint8_t command, int check_ack) {
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_TXR_RXR, data);
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_CR_SR, command);
+
+    if (!i2c_wait_tip_clear()) {
+        return 0;
+    }
+
+    if (check_ack && !i2c_check_ack()) {
+        return 0;
+    }
+
+    return 1;
+}
+
+/* ============================================================
+ * Audio codec I2C control
+ * ============================================================ */
+static void oc_i2c_audio_init(void) {
+    /*
+     * Para 100 kHz:
+     * prescale = 50 MHz / (5 * 100 kHz) - 1 = 99 = 0x63
+     */
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_PRER_LO, 0x63);
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_PRER_HI, 0x00);
+
+    /* Enable I2C core, IRQ disabled */
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_CTR, I2C_CTR_EN);
+
+    printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+           IORD(OC_I2C_MASTER_0_BASE, I2C_PRER_LO) & 0xFF);
+
+    printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+           IORD(OC_I2C_MASTER_0_BASE, I2C_PRER_HI) & 0xFF);
+
+    printf("[NIOS] I2C control = 0x%02lx\n",
+           IORD(OC_I2C_MASTER_0_BASE, I2C_CTR) & 0xFF);
+}
+
+static int oc_i2c_audio_wr_reg(uint8_t reg, uint16_t data) {
+    uint8_t reg_data;
+
+    /*
+     * Codec WM8731 address:
+     * 0x34 = device address + write
+     */
+    if (!i2c_write_byte(0x34, I2C_CR_STA_WR, 1)) {
+        return 0;
+    }
+
+    /*
+     * Register address + data bit 8
+     */
+    reg_data = ((reg << 1) & 0xFE) | ((data >> 8) & 0x01);
+
+    if (!i2c_write_byte(reg_data, I2C_CR_WR, 1)) {
+        return 0;
+    }
+
+    /*
+     * Lower 8 bits of data
+     */
+    if (!i2c_write_byte(data & 0xFF, I2C_CR_WR, 1)) {
+        return 0;
+    }
+
+    /*
+     * STOP
+     */
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_CR_SR, I2C_CR_STO);
+
+    return 1;
+}
+
+/* ============================================================
+ * AUDIO_IF control
+ * ============================================================ */
+static int audio_dac_fifo_not_full(void) {
+    uint32_t status = IORD(AUDIO_IF_0_BASE, AUDIO_STATUS_PORT);
+    return ((status & MASK_STATUS_DAC_FULL) == 0);
+}
+
+static void audio_dac_fifo_set_data(int16_t left, int16_t right) {
+    IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_LFIFO_PORT, ((uint16_t)left));
+    IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_RFIFO_PORT, ((uint16_t)right));
+}
+
+static void audio_fifo_clear(void) {
+    IOWR(AUDIO_IF_0_BASE, AUDIO_CMD_PORT, 0x01);
+}
+
+/* ============================================================
+ * Codec configuration helpers
+ * ============================================================ */
+static int audio_interface_active(int active) {
+    return oc_i2c_audio_wr_reg(9, active ? 0x0001 : 0x0000);
+}
+
+static int audio_dac_soft_mute(int enable) {
+    uint16_t control = 0x0000;
+
+    if (enable) {
+        control |= (1 << 3);
+    } else {
+        control &= ~(1 << 3);
+    }
+
+    return oc_i2c_audio_wr_reg(5, control);
+}
+
+static int audio_mic_mute(int mute) {
+    uint16_t control = 0x0014;
+
+    if (mute) {
+        control |= (1 << 1);
+    } else {
+        control &= ~(1 << 1);
+    }
+
+    return oc_i2c_audio_wr_reg(4, control);
+}
+
+static int audio_line_in_mute(int mute) {
+    uint16_t control_l = 0x0017;
+    uint16_t control_r = 0x0017;
+
+    if (mute) {
+        control_l |= (1 << 7);
+        control_r |= (1 << 7);
+    } else {
+        control_l &= ~(1 << 7);
+        control_r &= ~(1 << 7);
+    }
+
+    if (!oc_i2c_audio_wr_reg(0, control_l)) {
+        return 0;
+    }
+
+    usleep(10000);
+
+    if (!oc_i2c_audio_wr_reg(1, control_r)) {
+        return 0;
+    }
+
+    return 1;
+}
+
+static int audio_set_line_out_vol(uint8_t l_vol, uint8_t r_vol) {
+    uint16_t control;
+
+    control = 0x005B;
+    control &= 0xFF80;
+    control += l_vol & 0x7F;
+
+    if (!oc_i2c_audio_wr_reg(2, control)) {
+        return 0;
+    }
+
+    usleep(10000);
+
+    control = 0x005B;
+    control &= 0xFF80;
+    control += r_vol & 0x7F;
+
+    if (!oc_i2c_audio_wr_reg(3, control)) {
+        return 0;
+    }
+
+    return 1;
+}
+
+static int audio_set_sample_rate_44k1(void) {
+    /*
+     * Mismo estilo de tu código anterior:
+     * RATE_ADC44K1_DAC44K1 -> (0x8 << 2) | 0x02
+     */
+    uint16_t control = (0x8 << 2) | 0x02;
+    return oc_i2c_audio_wr_reg(8, control);
+}
+
+static int init_audio(void) {
+    int ok = 1;
+
+    printf("[NIOS] Initializing audio codec...\n");
+
+    if (ok) ok = oc_i2c_audio_wr_reg(15, 0x0000);  // reset
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(9, 0x0000);   // inactive interface
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(0, 0x0017);   // left line in
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(1, 0x0017);   // right line in
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(2, 0x005B);   // left headphone out
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(3, 0x005B);   // right headphone out
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(4, 0x0015 | 0x20 | 0x08 | 0x01);
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(5, 0x0000);   // digital path, no mute
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(6, 0x0000);   // power on all
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(7, 0x0042);   // I2S, 16-bit, master mode
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(8, 0x0002);
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(9, 0x0001);   // active interface
+    usleep(10000);
+
+    if (!ok) {
+        printf("[NIOS] Audio codec init FAILED\n");
+        shm_write(SHM_STATUS, STATUS_ERROR);
+        shm_write(SHM_LAST_ERROR, ERR_AUDIO_INIT);
+        return 0;
+    }
+
+    audio_interface_active(0);
+    usleep(10000);
+
+    audio_dac_soft_mute(1);
+    usleep(10000);
+
+    audio_mic_mute(1);
+    usleep(10000);
+
+    audio_line_in_mute(1);
+    usleep(10000);
+
+    audio_dac_soft_mute(0);
+    usleep(10000);
+
+    audio_set_line_out_vol(0x79, 0x79);
+    usleep(10000);
+
+    audio_fifo_clear();
+    usleep(10000);
+
+    audio_set_sample_rate_44k1();
+    usleep(10000);
+
+    audio_interface_active(1);
+    usleep(10000);
+
+    printf("[NIOS] Audio codec init OK\n");
+
+    return 1;
+}
+
+/* ============================================================
+ * Tone generator
+ * ============================================================ */
+static void play_tone_until_stop(void) {
+    uint32_t half_period_samples = SAMPLE_RATE_HZ / (TONE_FREQ_HZ * 2);
+    uint32_t sample_count = 0;
+    int16_t sample = TONE_AMPLITUDE;
+
+    printf("[NIOS] Playing tone...\n");
+
+    shm_write(SHM_STATUS, STATUS_TONE);
+    g_stop_tone = 0;
+
+    while (!g_stop_tone) {
+        uint32_t cmd = shm_read(SHM_COMMAND);
+
+        if (cmd == CMD_STOP) {
+            shm_write(SHM_COMMAND, CMD_NONE);
+            g_stop_tone = 1;
+            break;
+        }
+
+        if (audio_dac_fifo_not_full()) {
+            if (sample_count >= half_period_samples) {
+                sample = -sample;
+                sample_count = 0;
+            }
+
+            audio_dac_fifo_set_data(sample, sample);
+            sample_count++;
+        }
+    }
+
+    audio_fifo_clear();
+    shm_write(SHM_STATUS, STATUS_STOPPED);
+
+    printf("[NIOS] Tone stopped\n");
+}
+
+/* ============================================================
+ * Shared_RAM initialization
+ * ============================================================ */
+static void shared_ram_init(void) {
+    shm_write(SHM_MAGIC, MAGIC_VALUE);
+    shm_write(SHM_VERSION, SHM_VERSION_VALUE);
+    shm_write(SHM_COMMAND, CMD_NONE);
+    shm_write(SHM_STATUS, STATUS_BOOTING);
+    shm_write(SHM_FLAGS, 0);
+
+    shm_write(SHM_SAMPLE_RATE, SAMPLE_RATE_HZ);
+    shm_write(SHM_CHANNELS, 2);
+    shm_write(SHM_BITS_PER_SAMPLE, 16);
+
+    shm_write(SHM_ACTIVE_BUFFER, 0);
+    shm_write(SHM_BUFFER0_SIZE, 0);
+    shm_write(SHM_BUFFER1_SIZE, 0);
+    shm_write(SHM_BUFFER0_READY, 0);
+    shm_write(SHM_BUFFER1_READY, 0);
+
+    shm_write(SHM_COUNTER, 0);
+    shm_write(SHM_UNDERRUNS, 0);
+    shm_write(SHM_LAST_ERROR, ERR_NONE);
+}
+
+/* ============================================================
+ * Main
+ * ============================================================ */
+int main(void) {
+    printf("[NIOS] Boot\n");
+
+    shared_ram_init();
+
+    oc_i2c_audio_init();
+
+    if (!init_audio()) {
+        while (1) {
+            IOWR(LED_PIO_BASE, 0, 0x3FF);
+            usleep(200000);
+            IOWR(LED_PIO_BASE, 0, 0x000);
+            usleep(200000);
+        }
+    }
+
+    shm_write(SHM_STATUS, STATUS_READY);
+
+    printf("[NIOS] Ready. Send CMD_PLAY_TONE from HPS.\n");
+
+    uint32_t counter = 0;
+
+    while (1) {
+        uint32_t cmd = shm_read(SHM_COMMAND);
+
+        shm_write(SHM_COUNTER, counter++);
+
+        if (cmd == CMD_INIT_AUDIO) {
+            shm_write(SHM_COMMAND, CMD_NONE);
+            init_audio();
+            shm_write(SHM_STATUS, STATUS_READY);
+        }
+        else if (cmd == CMD_PLAY_TONE) {
+            shm_write(SHM_COMMAND, CMD_NONE);
+            play_tone_until_stop();
+        }
+        else if (cmd == CMD_STOP) {
+            shm_write(SHM_COMMAND, CMD_NONE);
+            audio_fifo_clear();
+            shm_write(SHM_STATUS, STATUS_STOPPED);
+        }
+
+        usleep(10000);
+    }
+
+    return 0;
+}

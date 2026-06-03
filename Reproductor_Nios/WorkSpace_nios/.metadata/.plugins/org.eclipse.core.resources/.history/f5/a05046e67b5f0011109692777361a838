@@ -1,0 +1,345 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <unistd.h>
+
+#include "system.h"
+#include "io.h"
+#include "audio_nios.h"
+
+/* AUDIO_IF register offsets */
+#define AUDIO_DAC_LFIFO_PORT   0
+#define AUDIO_DAC_RFIFO_PORT   1
+#define AUDIO_ADC_LFIFO_PORT   2
+#define AUDIO_ADC_RFIFO_PORT   3
+#define AUDIO_CMD_PORT         4
+#define AUDIO_STATUS_PORT      5
+
+#define MASK_STATUS_DAC_FULL   0x01
+
+/* OpenCores I2C register offsets */
+#define I2C_PRER_LO   0
+#define I2C_PRER_HI   1
+#define I2C_CTR       2
+#define I2C_TXR_RXR   3
+#define I2C_CR_SR     4
+
+#define I2C_CTR_EN    0x80
+
+#define I2C_CR_STA_WR 0x90
+#define I2C_CR_WR     0x10
+#define I2C_CR_STO    0x40
+
+#define I2C_SR_RXACK  0x80
+#define I2C_SR_TIP    0x02
+
+#define AUDIO_SWAP_HW_PORTS 1
+#define NIOS_SWAP_16BIT_SAMPLE_BYTES 0
+
+/*
+ * LINEOUT 0x79.
+ */
+#define AUDIO_LINEOUT_VOL 0x50
+
+static int i2c_wait_tip_clear(void) {
+    uint32_t timeout = 1000000;
+
+    while ((IORD(OC_I2C_MASTER_0_BASE, I2C_CR_SR) & I2C_SR_TIP) && timeout--) {
+        /* wait */
+    }
+
+    return timeout != 0;
+}
+
+static int i2c_check_ack(void) {
+    uint32_t status = IORD(OC_I2C_MASTER_0_BASE, I2C_CR_SR);
+    return ((status & I2C_SR_RXACK) == 0);
+}
+
+static int i2c_write_byte(uint8_t data, uint8_t command, int check_ack) {
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_TXR_RXR, data);
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_CR_SR, command);
+
+    if (!i2c_wait_tip_clear()) {
+        return 0;
+    }
+
+    if (check_ack && !i2c_check_ack()) {
+        return 0;
+    }
+
+    return 1;
+}
+
+void oc_i2c_audio_init(void) {
+    /*
+     * Igual que tu código viejo:
+     * prescale = 0x0063 para 100 kHz con reloj de 50 MHz.
+     */
+
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_CTR, 0x00);
+    usleep(1000);
+
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_PRER_LO, 0x63);
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_PRER_HI, 0x00);
+
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_CTR, I2C_CTR_EN);
+
+    printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+           IORD(OC_I2C_MASTER_0_BASE, I2C_PRER_LO) & 0xFF);
+
+    printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+           IORD(OC_I2C_MASTER_0_BASE, I2C_PRER_HI) & 0xFF);
+
+    printf("[NIOS] I2C control = 0x%02lx\n",
+           IORD(OC_I2C_MASTER_0_BASE, I2C_CTR) & 0xFF);
+}
+
+static int oc_i2c_audio_wr_reg(uint8_t reg, uint16_t data) {
+    uint8_t reg_data;
+
+    if (!i2c_write_byte(0x34, I2C_CR_STA_WR, 1)) {
+        printf("[NIOS][I2C] No ACK device addr, reg=%u\n", reg);
+        return 0;
+    }
+
+    reg_data = ((reg << 1) & 0xFE) | ((data >> 8) & 0x01);
+
+    if (!i2c_write_byte(reg_data, I2C_CR_WR, 1)) {
+        printf("[NIOS][I2C] No ACK reg byte, reg=%u\n", reg);
+        return 0;
+    }
+
+    if (!i2c_write_byte(data & 0xFF, I2C_CR_WR, 1)) {
+        printf("[NIOS][I2C] No ACK data byte, reg=%u data=0x%04x\n", reg, data);
+        return 0;
+    }
+
+    IOWR(OC_I2C_MASTER_0_BASE, I2C_CR_SR, I2C_CR_STO);
+    usleep(1000);
+
+    return 1;
+}
+
+int audio_dac_fifo_not_full(void) {
+    uint32_t status = IORD(AUDIO_IF_0_BASE, AUDIO_STATUS_PORT);
+    return ((status & MASK_STATUS_DAC_FULL) == 0);
+}
+
+
+void audio_dac_fifo_set_data(int16_t left, int16_t right) {
+   IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_RFIFO_PORT, ((uint16_t)left) & 0xFFFF);
+   IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_LFIFO_PORT, ((uint16_t)right) & 0xFFFF);
+}
+
+
+void audio_output_silence(uint32_t frames) {
+    uint32_t i;
+
+    for (i = 0; i < frames; i++) {
+        while (!audio_dac_fifo_not_full()) {
+            /* wait */
+        }
+
+        audio_dac_fifo_set_data(0, 0);
+    }
+}
+
+void audio_fifo_clear(void) {
+    IOWR(AUDIO_IF_0_BASE, AUDIO_CMD_PORT, 0x01);
+}
+
+static int audio_interface_active(int active) {
+    return oc_i2c_audio_wr_reg(9, active ? 0x0001 : 0x0000);
+}
+
+static int audio_dac_soft_mute(int enable) {
+    uint16_t control = 0x0000;
+
+    if (enable) {
+        control |= (1 << 3);
+    }
+
+    return oc_i2c_audio_wr_reg(5, control);
+}
+
+static int audio_mic_mute(int mute) {
+    uint16_t control = 0x0014;
+
+    if (mute) {
+        control |= (1 << 1);
+    }
+
+    return oc_i2c_audio_wr_reg(4, control);
+}
+
+static int audio_line_in_mute(int mute) {
+    uint16_t control_l = 0x0017;
+    uint16_t control_r = 0x0017;
+
+    if (mute) {
+        control_l |= (1 << 7);
+        control_r |= (1 << 7);
+    }
+
+    if (!oc_i2c_audio_wr_reg(0, control_l)) {
+        return 0;
+    }
+
+    usleep(10000);
+
+    if (!oc_i2c_audio_wr_reg(1, control_r)) {
+        return 0;
+    }
+
+    return 1;
+}
+
+static int audio_set_line_out_vol(uint8_t l_vol, uint8_t r_vol) {
+    uint16_t control;
+
+    control = 0x005B;
+    control &= 0xFF80;
+    control += l_vol & 0x7F;
+
+    if (!oc_i2c_audio_wr_reg(2, control)) {
+        return 0;
+    }
+
+    usleep(10000);
+
+    control = 0x005B;
+    control &= 0xFF80;
+    control += r_vol & 0x7F;
+
+    if (!oc_i2c_audio_wr_reg(3, control)) {
+        return 0;
+    }
+
+    return 1;
+}
+
+static int audio_set_sample_rate_44k1(void) {
+    uint16_t control = (0x8 << 2) | 0x02;
+    return oc_i2c_audio_wr_reg(8, control);
+}
+
+static int audio_set_sample_rate_32k(void) {
+    uint16_t control = (0x6 << 2) | 0x02;
+    return oc_i2c_audio_wr_reg(8, control);
+}
+
+int init_audio(void) {
+    int ok = 1;
+
+    printf("[NIOS] Initializing audio codec using HPS-compatible sequence...\n");
+
+    /*
+     * Esta secuencia se parece mucho más a tu audio_control viejo.
+     */
+
+    if (ok) ok = oc_i2c_audio_wr_reg(15, 0x0000);  /* reset */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(9, 0x0000);   /* inactive interface */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(0, 0x0017);   /* left line in */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(1, 0x0017);   /* right line in */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(2, 0x005B);   /* left headphone out default */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(3, 0x005B);   /* right headphone out default */
+    usleep(10000);
+
+    /*
+     * Copiado de tu implementación antigua:
+     * 0x0015 | 0x20 | 0x08 | 0x01.
+     *
+     * Aunque te había propuesto DAC-only, para comparar con el HPS viejo
+     * conviene usar la misma ruta que ya te funcionaba decentemente.
+     * if (ok) ok = oc_i2c_audio_wr_reg(4, 0x0015 | 0x20 | 0x08 | 0x01);
+     */
+
+    if (ok) ok = oc_i2c_audio_wr_reg(4, 0x0010);  /* DACSEL only */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(5, 0x0000);   /* digital path: no mute */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(6, 0x0000);   /* power on all */
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(7, 0x0042);   /* I2S, 16-bit, master mode */
+    usleep(10000);
+
+    /*
+     * Primero dejamos base normal como en tu código viejo.
+     */
+    if (ok) ok = oc_i2c_audio_wr_reg(8, 0x0002);
+    usleep(10000);
+
+    if (ok) ok = oc_i2c_audio_wr_reg(9, 0x0001);   /* active interface */
+    usleep(10000);
+
+    if (!ok) {
+        printf("[NIOS] Audio codec init FAILED during base config\n");
+        return 0;
+    }
+
+    /*
+     * Segunda etapa, igual que tu código viejo:
+     * desactivar, soft mute, mutear entradas, quitar mute, volumen, limpiar FIFO,
+     * sample rate 32k, activar.
+     */
+
+    if (ok) ok = audio_interface_active(0);
+    usleep(10000);
+
+    if (ok) ok = audio_dac_soft_mute(1);
+    usleep(10000);
+
+    if (ok) ok = audio_mic_mute(1);
+    usleep(10000);
+
+    if (ok) ok = audio_line_in_mute(1);
+    usleep(10000);
+
+    if (ok) ok = audio_dac_soft_mute(0);
+    usleep(10000);
+
+    if (ok) ok = audio_set_line_out_vol(AUDIO_LINEOUT_VOL, AUDIO_LINEOUT_VOL);
+    usleep(10000);
+
+    if (ok) ok = audio_dac_soft_mute(0);
+    usleep(10000);
+
+    audio_fifo_clear();
+    usleep(10000);
+
+    /*
+     * Primero 44.1 como transición vieja, luego 32k.
+     * Si esto no mejora, puedes eliminar audio_set_sample_rate_44k1().
+     */
+    if (ok) ok = audio_set_sample_rate_44k1();
+    usleep(10000);
+
+    if (ok) ok = audio_set_sample_rate_32k();
+    usleep(10000);
+
+    if (ok) ok = audio_interface_active(1);
+    usleep(10000);
+
+    if (!ok) {
+        printf("[NIOS] Audio codec init FAILED during final config\n");
+        return 0;
+    }
+
+    printf("[NIOS] Audio codec init OK\n");
+    printf("[NIOS] Codec: I2S 16-bit, 32 kHz, lineout=0x%02X\n", AUDIO_LINEOUT_VOL);
+
+    return 1;
+}

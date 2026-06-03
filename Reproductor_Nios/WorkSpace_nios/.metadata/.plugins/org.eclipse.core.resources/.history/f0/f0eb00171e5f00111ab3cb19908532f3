@@ -1,0 +1,233 @@
+/*
+ * main.c
+ *
+ *  Created on: 3 de jun. de 2026
+ *      Author: Javier Tenorio
+ */
+
+#include <stdio.h>
+#include <stdint.h>
+#include <unistd.h>
+
+#include "system.h"
+#include "io.h"
+
+#include "shared_protocol.h"
+#include "audio_nios.h"
+
+static inline void shm_write(uint32_t offset, uint32_t value) {
+    IOWR(SHARED_RAM_BASE, offset, value);
+}
+
+static inline uint32_t shm_read(uint32_t offset) {
+    return IORD(SHARED_RAM_BASE, offset);
+}
+
+static void shared_ram_init(void) {
+    shm_write(SHM_MAGIC, MAGIC_VALUE);
+    shm_write(SHM_VERSION, SHM_VERSION_VALUE);
+    shm_write(SHM_COMMAND, CMD_NONE);
+    shm_write(SHM_STATUS, STATUS_BOOTING);
+    shm_write(SHM_FLAGS, 0);
+
+    shm_write(SHM_SAMPLE_RATE, PCM_SAMPLE_RATE_HZ);
+    shm_write(SHM_CHANNELS, PCM_CHANNELS);
+    shm_write(SHM_BITS_PER_SAMPLE, PCM_BITS_PER_SAMPLE);
+
+    shm_write(SHM_ACTIVE_BUFFER, 0);
+    shm_write(SHM_BUFFER0_SIZE, 0);
+    shm_write(SHM_BUFFER1_SIZE, 0);
+    shm_write(SHM_BUFFER0_READY, 0);
+    shm_write(SHM_BUFFER1_READY, 0);
+
+    shm_write(SHM_COUNTER, 0);
+    shm_write(SHM_UNDERRUNS, 0);
+    shm_write(SHM_LAST_ERROR, ERR_NONE);
+    shm_write(SHM_TOTAL_WORDS_SENT, 0);
+    shm_write(SHM_TOTAL_WORDS_PLAYED, 0);
+}
+
+static void wait_until_fifo_ready_and_write(uint32_t pcm_word) {
+    int16_t left;
+    int16_t right;
+
+    /*
+     * PCM s16le stereo:
+     * byte0 = left low
+     * byte1 = left high
+     * byte2 = right low
+     * byte3 = right high
+     *
+     * En little-endian como uint32:
+     * bits [15:0]  = left
+     * bits [31:16] = right
+     */
+    left = (int16_t)(pcm_word & 0xFFFF);
+    right = (int16_t)((pcm_word >> 16) & 0xFFFF);
+
+    while (!audio_dac_fifo_not_full()) {
+        uint32_t cmd = shm_read(SHM_COMMAND);
+        uint32_t flags = shm_read(SHM_FLAGS);
+
+        if (cmd == CMD_STOP || (flags & FLAG_STOP_REQUEST)) {
+            return;
+        }
+    }
+
+    audio_dac_fifo_set_data(left, right);
+}
+
+static int play_one_buffer(uint32_t buffer_word_offset, uint32_t size_words) {
+    uint32_t i;
+
+    for (i = 0; i < size_words; i++) {
+        uint32_t cmd = shm_read(SHM_COMMAND);
+        uint32_t flags = shm_read(SHM_FLAGS);
+
+        if (cmd == CMD_STOP || (flags & FLAG_STOP_REQUEST)) {
+            return 0;
+        }
+
+        uint32_t pcm_word = shm_read(buffer_word_offset + i);
+        wait_until_fifo_ready_and_write(pcm_word);
+
+        shm_write(SHM_TOTAL_WORDS_PLAYED, shm_read(SHM_TOTAL_WORDS_PLAYED) + 1);
+    }
+
+    return 1;
+}
+
+static void play_pcm_from_shared_ram(void) {
+    uint32_t active = 0;
+
+    printf("[NIOS] Starting PCM playback from Shared_RAM\n");
+
+    shm_write(SHM_STATUS, STATUS_PLAYING);
+    shm_write(SHM_ACTIVE_BUFFER, active);
+    shm_write(SHM_COMMAND, CMD_NONE);
+    shm_write(SHM_LAST_ERROR, ERR_NONE);
+
+    while (1) {
+        uint32_t flags = shm_read(SHM_FLAGS);
+        uint32_t cmd = shm_read(SHM_COMMAND);
+
+        if (cmd == CMD_STOP || (flags & FLAG_STOP_REQUEST)) {
+            printf("[NIOS] Stop requested\n");
+            shm_write(SHM_COMMAND, CMD_NONE);
+            break;
+        }
+
+        if (active == 0) {
+            uint32_t ready = shm_read(SHM_BUFFER0_READY);
+
+            if (ready) {
+                uint32_t size_words = shm_read(SHM_BUFFER0_SIZE);
+
+                shm_write(SHM_ACTIVE_BUFFER, 0);
+
+                if (!play_one_buffer(SHM_BUFFER0_WORD, size_words)) {
+                    break;
+                }
+
+                shm_write(SHM_BUFFER0_READY, 0);
+                shm_write(SHM_BUFFER0_SIZE, 0);
+
+                active = 1;
+            } else {
+                if ((flags & FLAG_EOF) && !shm_read(SHM_BUFFER1_READY)) {
+                    break;
+                }
+
+                shm_write(SHM_STATUS, STATUS_WAITING_DATA);
+                shm_write(SHM_UNDERRUNS, shm_read(SHM_UNDERRUNS) + 1);
+                usleep(100);
+                shm_write(SHM_STATUS, STATUS_PLAYING);
+            }
+        } else {
+            uint32_t ready = shm_read(SHM_BUFFER1_READY);
+
+            if (ready) {
+                uint32_t size_words = shm_read(SHM_BUFFER1_SIZE);
+
+                shm_write(SHM_ACTIVE_BUFFER, 1);
+
+                if (!play_one_buffer(SHM_BUFFER1_WORD, size_words)) {
+                    break;
+                }
+
+                shm_write(SHM_BUFFER1_READY, 0);
+                shm_write(SHM_BUFFER1_SIZE, 0);
+
+                active = 0;
+            } else {
+                if ((flags & FLAG_EOF) && !shm_read(SHM_BUFFER0_READY)) {
+                    break;
+                }
+
+                shm_write(SHM_STATUS, STATUS_WAITING_DATA);
+                shm_write(SHM_UNDERRUNS, shm_read(SHM_UNDERRUNS) + 1);
+                usleep(100);
+                shm_write(SHM_STATUS, STATUS_PLAYING);
+            }
+        }
+    }
+
+    audio_fifo_clear();
+
+    shm_write(SHM_STATUS, STATUS_FINISHED);
+    shm_write(SHM_BUFFER0_READY, 0);
+    shm_write(SHM_BUFFER1_READY, 0);
+    shm_write(SHM_COMMAND, CMD_NONE);
+
+    printf("[NIOS] PCM playback finished\n");
+}
+
+int main(void) {
+    printf("[NIOS] Boot\n");
+
+    shared_ram_init();
+
+    oc_i2c_audio_init();
+
+    if (!init_audio()) {
+        shm_write(SHM_STATUS, STATUS_ERROR);
+        shm_write(SHM_LAST_ERROR, ERR_AUDIO_INIT);
+
+        while (1) {
+            IOWR(LED_PIO_BASE, 0, 0x3FF);
+            usleep(200000);
+            IOWR(LED_PIO_BASE, 0, 0x000);
+            usleep(200000);
+        }
+    }
+
+    shm_write(SHM_STATUS, STATUS_READY);
+
+    printf("[NIOS] Ready. Waiting for CMD_PLAY_PCM.\n");
+
+    uint32_t counter = 0;
+
+    while (1) {
+        uint32_t cmd = shm_read(SHM_COMMAND);
+
+        shm_write(SHM_COUNTER, counter++);
+
+        if (cmd == CMD_INIT_AUDIO) {
+            printf("[NIOS] Reinitializing audio\n");
+            shm_write(SHM_COMMAND, CMD_NONE);
+            init_audio();
+            shm_write(SHM_STATUS, STATUS_READY);
+        } else if (cmd == CMD_PLAY_PCM) {
+            play_pcm_from_shared_ram();
+            shm_write(SHM_STATUS, STATUS_READY);
+        } else if (cmd == CMD_STOP) {
+            shm_write(SHM_COMMAND, CMD_NONE);
+            audio_fifo_clear();
+            shm_write(SHM_STATUS, STATUS_STOPPED);
+        }
+
+        usleep(1000);
+    }
+
+    return 0;
+}

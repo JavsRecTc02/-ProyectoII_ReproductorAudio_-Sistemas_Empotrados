@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <unistd.h>
+
+#include "system.h"
+#include "io.h"
+
+#define SHARED_MAGIC_OFFSET   0
+#define SHARED_STATUS_OFFSET  1
+#define SHARED_COMMAND_OFFSET 2
+#define SHARED_COUNTER_OFFSET 3
+
+#define MAGIC_VALUE 0x12345678
+
+int main(void) {
+    printf("Prueba Shared_RAM\n");
+
+    IOWR(SHARED_RAM_BASE, SHARED_MAGIC_OFFSET, MAGIC_VALUE);
+    IOWR(SHARED_RAM_BASE, SHARED_STATUS_OFFSET, 0x1);
+    IOWR(SHARED_RAM_BASE, SHARED_COMMAND_OFFSET, 0x0);
+
+    uint32_t counter = 0;
+
+    while (1) {
+        uint32_t cmd = IORD(SHARED_RAM_BASE, SHARED_COMMAND_OFFSET);
+
+        if (cmd == 1) {
+            IOWR(LED_PIO_BASE, 0, 0x001);
+        } else if (cmd == 2) {
+            IOWR(LED_PIO_BASE, 0, 0x002);
+        } else if (cmd == 3) {
+            IOWR(LED_PIO_BASE, 0, 0x004);
+        }
+
+        IOWR(SHARED_RAM_BASE, SHARED_COUNTER_OFFSET, counter++);
+        usleep(200000);
+    }
+
+    return 0;
+}
