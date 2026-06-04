@@ -1425,3 +1425,1743 @@ Info: Building ../nios_soft_bsp/
 C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
 [BSP build complete]
 [nios_soft build complete]
+15:10:39 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:220:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:32:17: warning: 'swap16_u' defined but not used [-Wunused-function]
+ static uint16_t swap16_u(uint16_t x) {
+                 ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+15:10:40 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:27:37 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:27:38 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:27:59 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:30:16 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:220:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+15:30:17 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:30:24 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:32:49 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:37:09 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:39:13 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:40:29 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7528 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+15:42:59 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: In function 'audio_set_sample_rate_32k':
+audio_nios.c:227:5: error: expected ',' or ';' before 'return'
+     return oc_i2c_audio_wr_reg(8, control);
+     ^
+audio_nios.c:226:14: warning: unused variable 'control' [-Wunused-variable]
+     uint16_t control = (0x6 << 2) | 0x02
+              ^
+audio_nios.c:228:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }
+ ^
+make: *** [obj/default/audio_nios.o] Error 1
+15:43:00 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:44:03 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7528 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+15:44:04 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:44:16 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:51:40 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:51:41 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:52:36 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7528 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+15:52:37 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:52:44 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+15:56:30 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+15:56:31 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+15:56:39 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:02:22 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:02:23 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:04:13 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:05:13 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:05:14 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:05:18 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:06:37 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7528 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:06:38 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:06:48 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:07:32 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7556 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:07:33 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:07:37 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:19:12 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:19:13 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:19:29 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:24:24 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:27:03 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:27:04 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:27:10 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:31:15 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:31:16 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:31:21 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:32:27 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:32:28 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:32:34 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:36:00 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:36:49 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:36:50 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:36:59 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:37:36 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:37:37 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:37:42 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:48:40 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:48:41 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:51:40 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7472 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:51:42 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:51:47 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:53:09 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:54:37 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:225:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+audio_nios.c:230:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:54:38 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:54:56 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:55:39 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:224:12: warning: 'audio_set_sample_rate_32k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_32k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:55:40 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:55:45 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+16:57:21 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+16:57:22 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+16:57:27 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:00:21 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7472 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:00:22 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:00:29 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:09:28 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7472 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:09:29 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:09:34 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:13:17 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:14:21 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7472 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:14:22 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:14:29 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:41:45 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7472 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:41:46 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:41:56 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:43:06 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7472 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:43:07 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:43:12 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:43:55 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7472 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:43:56 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:44:01 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:46:45 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:46:46 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:46:50 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:48:02 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:48:04 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:48:08 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:49:11 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:49:55 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:49:56 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:50:00 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:50:55 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:50:56 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:50:59 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:53:19 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:53:20 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:53:24 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:54:33 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:54:34 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:54:41 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:54:54 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:55:28 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:55:29 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:55:37 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:57:35 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+17:58:17 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:229:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7500 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+17:58:18 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+17:58:22 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+18:13:30 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling audio_nios.c to obj/default/audio_nios.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/audio_nios.o audio_nios.c
+audio_nios.c: In function 'oc_i2c_audio_init':
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler LO = 0x%02lx\n",
+            ^
+audio_nios.c:86:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C prescaler HI = 0x%02lx\n",
+            ^
+audio_nios.c:89:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+     printf("[NIOS] I2C control = 0x%02lx\n",
+            ^
+audio_nios.c:92:12: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+audio_nios.c: At top level:
+audio_nios.c:219:12: warning: 'audio_set_sample_rate_44k1' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_44k1(void) {
+            ^
+audio_nios.c:230:12: warning: 'audio_set_sample_rate_48k' defined but not used [-Wunused-function]
+ static int audio_set_sample_rate_48k(void) {
+            ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'play_one_buffer':
+main.c:129:5: error: expected ';' before '}' token
+     }
+     ^
+main.c: At top level:
+main.c:32:17: warning: 'swap16_u' defined but not used [-Wunused-function]
+ static uint16_t swap16_u(uint16_t x) {
+                 ^
+make: *** [obj/default/main.o] Error 1
+18:13:31 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+18:14:38 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'play_one_buffer':
+main.c:129:5: error: expected ';' before '}' token
+     }
+     ^
+main.c: At top level:
+main.c:32:17: warning: 'swap16_u' defined but not used [-Wunused-function]
+ static uint16_t swap16_u(uint16_t x) {
+                 ^
+make: *** [obj/default/main.o] Error 1
+18:15:25 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:32:17: warning: 'swap16_u' defined but not used [-Wunused-function]
+ static uint16_t swap16_u(uint16_t x) {
+                 ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7572 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+18:15:26 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+18:15:41 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:32:17: warning: 'swap16_u' defined but not used [-Wunused-function]
+ static uint16_t swap16_u(uint16_t x) {
+                 ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7580 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+18:15:42 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+18:15:49 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+18:16:02 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]
+18:16:52 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../nios_soft_bsp//HAL/inc -I../nios_soft_bsp/ -I../nios_soft_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_C_PLUS_PLUS -DALT_NO_CLEAN_EXIT -D'exit(a)=_exit(a)' -DALT_NO_EXIT -DALT_USE_DIRECT_DRIVERS -DALT_NO_INSTRUCTION_EMULATION -DALT_USE_SMALL_DRIVERS -DSMALL_C_LIB -DALT_SINGLE_THREADED    -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:32:17: warning: 'swap16_u' defined but not used [-Wunused-function]
+ static uint16_t swap16_u(uint16_t x) {
+                 ^
+Info: Linking nios_soft.elf
+nios2-elf-g++  -T'../nios_soft_bsp//linker.x' -msys-crt0='../nios_soft_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../nios_soft_bsp/  -msmallc  -Wl,-Map=nios_soft.map   -Os -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o nios_soft.elf obj/default/audio_nios.o obj/default/hello_world_small.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert nios_soft.elf --thread_model hal --cpu_name NIOS_cpu --qsys true --simulation_enabled false --id 2899645186 --sidp 0x10000 --timestamp 1780508765 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name soc_system --quartus_project_dir "C:/fpga/DE1-SoC-MyPlayer-master" --jdi C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.jdi --sopcinfo C:/fpga/DE1-SoC-MyPlayer-master/software/nios_soft_bsp/../../soc_system.sopcinfo
+Info: (nios_soft.elf) 7580 Bytes program size (code + initialized data).
+Info:                 62 KBytes free for stack + heap.
+Info: Creating nios_soft.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source nios_soft.elf >nios_soft.objdump
+[nios_soft build complete]
+18:16:53 **** Incremental Build of configuration Nios II for project nios_soft_bsp ****
+make all 
+[BSP build complete]
+18:16:59 **** Incremental Build of configuration Nios II for project nios_soft ****
+make all 
+Info: Building ../nios_soft_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../nios_soft_bsp/
+[BSP build complete]
+[nios_soft build complete]

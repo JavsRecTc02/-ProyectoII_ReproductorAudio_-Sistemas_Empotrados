@@ -28,7 +28,7 @@
  * Volvemos a ese valor para comparar mejor.
  * Si queda muy fuerte, prueba 0.20.
  */
-#define FFMPEG_VOLUME "0.20"
+#define FFMPEG_VOLUME "0.30"
 
 static volatile uint32_t *g_shm = NULL;
 static uint32_t g_local_words[SHM_BUFFER_WORDS];

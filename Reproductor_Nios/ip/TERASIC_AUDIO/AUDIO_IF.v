@@ -112,6 +112,7 @@ reg                             fifo_clear;
 
 // dac fifo
 wire                            dacfifo_full;
+wire                            dacfifo_busy;
 reg                             dacfifo_write;
 reg     [31:0]                  dacfifo_writedata;
 
@@ -127,6 +128,27 @@ reg                             adcfifo_read;
 wire    [31:0]                  adcfifo_readdata;
 reg     [31:0]                  data32_from_adcfifo;
 reg     [31:0]                  data32_from_adcfifo_2;
+
+
+/*****************************************************************************
+ *                            Combinational logic                            *
+ *****************************************************************************/
+
+/*
+ * dacfifo_busy:
+ *
+ * bit usado por Nios para saber si puede escribir otro frame.
+ *
+ * 1 = NO escribir todavía.
+ * 0 = se puede escribir un nuevo par L/R.
+ *
+ * No solo depende del FIFO interno lleno, también depende de si AUDIO_IF
+ * ya tiene un frame completo esperando para entrar al FIFO.
+ */
+assign dacfifo_busy = dacfifo_full || (dac_left_valid && dac_right_valid);
+
+assign avs_s1_readdata   = reg_readdata;
+assign avs_s1_export_XCK = avs_s1_clk;
 
 
 /*****************************************************************************
@@ -148,23 +170,17 @@ end
 
 
 /*
- * Robust stereo write logic.
- *
- * Antes:
- * - Escribir LFIFO solo actualizaba [31:16].
- * - Escribir RFIFO actualizaba [15:0] y disparaba write.
- *
- * Problema:
- * Si el par L/R no llegaba perfecto, un canal podía quedar con dato viejo.
- *
- * Ahora:
- * - Guardamos left y right por separado.
- * - Marcamos left_valid/right_valid.
- * - Solo escribimos al FIFO cuando ambos canales están disponibles.
+ * Robust stereo write logic with backpressure protection.
  *
  * Formato hacia AUDIO_DAC:
  *   dacfifo_writedata[31:16] = left
  *   dacfifo_writedata[15:0]  = right
+ *
+ * Corrección:
+ * - Se capturan L y R por separado.
+ * - Cuando ya existe un frame completo, se intenta escribir al FIFO.
+ * - Si dacfifo_full == 1, el frame NO se borra.
+ * - El frame se mantiene en staging hasta que el FIFO tenga espacio.
  */
 always @(posedge avs_s1_clk)
 begin
@@ -180,46 +196,49 @@ begin
     end
     else
     begin
+        /*
+         * Por defecto no se escribe al FIFO.
+         * El pulso dura un ciclo.
+         */
         dacfifo_write <= 1'b0;
 
-        if (avs_s1_write && (avs_s1_address == `DAC_LFIFO_ADDR))
+        /*
+         * Caso 1:
+         * Ya tenemos un frame estéreo completo esperando.
+         *
+         * Mientras dac_left_valid && dac_right_valid estén activos,
+         * no aceptamos nuevos datos de Avalon para evitar sobrescribir
+         * el frame pendiente.
+         */
+        if (dac_left_valid && dac_right_valid)
         begin
-            /*
-             * Llega canal izquierdo.
-             */
-            dac_left_sample <= avs_s1_writedata;
-            dac_left_valid  <= 1'b1;
-
-            /*
-             * Si el derecho ya estaba esperando, completar frame.
-             */
-            if (dac_right_valid)
+            if (!dacfifo_full)
             begin
-                dacfifo_writedata <= {avs_s1_writedata, dac_right_sample};
+                dacfifo_writedata <= {dac_left_sample, dac_right_sample};
                 dacfifo_write     <= 1'b1;
 
                 dac_left_valid    <= 1'b0;
                 dac_right_valid   <= 1'b0;
             end
         end
-        else if (avs_s1_write && (avs_s1_address == `DAC_RFIFO_ADDR))
+
+        /*
+         * Caso 2:
+         * Todavía no hay frame completo.
+         * Se permite capturar L o R desde Avalon.
+         */
+        else
         begin
-            /*
-             * Llega canal derecho.
-             */
-            dac_right_sample <= avs_s1_writedata;
-            dac_right_valid  <= 1'b1;
-
-            /*
-             * Si el izquierdo ya estaba esperando, completar frame.
-             */
-            if (dac_left_valid)
+            if (avs_s1_write && (avs_s1_address == `DAC_LFIFO_ADDR))
             begin
-                dacfifo_writedata <= {dac_left_sample, avs_s1_writedata};
-                dacfifo_write     <= 1'b1;
+                dac_left_sample <= avs_s1_writedata;
+                dac_left_valid  <= 1'b1;
+            end
 
-                dac_left_valid    <= 1'b0;
-                dac_right_valid   <= 1'b0;
+            if (avs_s1_write && (avs_s1_address == `DAC_RFIFO_ADDR))
+            begin
+                dac_right_sample <= avs_s1_writedata;
+                dac_right_valid  <= 1'b1;
             end
         end
     end
@@ -239,10 +258,13 @@ begin
     else if (avs_s1_read && (avs_s1_address == `STATUS_ADDR))
     begin
         /*
-         * bit 0 = DAC FIFO full
+         * bit 0 = DAC busy/full
+         *         1 -> no escribir todavía
+         *         0 -> se puede escribir un nuevo frame L/R
+         *
          * bit 1 = ADC FIFO empty
          */
-        reg_readdata <= {14'd0, adcfifo_empty, dacfifo_full};
+        reg_readdata <= {14'd0, adcfifo_empty, dacfifo_busy};
     end
     else if (avs_s1_read && (avs_s1_address == `ADC_LFIFO_ADDR))
     begin
@@ -280,13 +302,6 @@ begin
         adcfifo_read <= 1'b0;
     end
 end
-
-
-/*****************************************************************************
- *                            Combinational logic                            *
- *****************************************************************************/
-assign avs_s1_readdata   = reg_readdata;
-assign avs_s1_export_XCK = avs_s1_clk;
 
 
 /*****************************************************************************

@@ -126,10 +126,9 @@ int audio_dac_fifo_not_full(void) {
 
 
 void audio_dac_fifo_set_data(int16_t left, int16_t right) {
-   IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_RFIFO_PORT, ((uint16_t)left) & 0xFFFF);
-   IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_LFIFO_PORT, ((uint16_t)right) & 0xFFFF);
+    IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_LFIFO_PORT, ((uint16_t)left) & 0xFFFF);
+    IOWR(AUDIO_IF_0_BASE, AUDIO_DAC_RFIFO_PORT, ((uint16_t)right) & 0xFFFF);
 }
-
 
 void audio_output_silence(uint32_t frames) {
     uint32_t i;
@@ -223,18 +222,21 @@ static int audio_set_sample_rate_44k1(void) {
 }
 
 static int audio_set_sample_rate_32k(void) {
-    uint16_t control = (0x6 << 2) | 0x02;
+	uint16_t control = (0x6 << 2) | 0x02;
+	printf("[NIOS] Writing WM8731 R8 sample rate control = 0x%04X\n", control);
     return oc_i2c_audio_wr_reg(8, control);
 }
+
+static int audio_set_sample_rate_48k(void) {
+    uint16_t control = 0x0002;   // 48 kHz con MCLK = 18.432 MHz
+    return oc_i2c_audio_wr_reg(8, control);
+}
+
 
 int init_audio(void) {
     int ok = 1;
 
     printf("[NIOS] Initializing audio codec using HPS-compatible sequence...\n");
-
-    /*
-     * Secuencia
-     */
 
     if (ok) ok = oc_i2c_audio_wr_reg(15, 0x0000);  /* reset */
     usleep(10000);
@@ -248,13 +250,13 @@ int init_audio(void) {
     if (ok) ok = oc_i2c_audio_wr_reg(1, 0x0017);   /* right line in */
     usleep(10000);
 
-    if (ok) ok = oc_i2c_audio_wr_reg(2, 0x005B);   /* left headphone out default */
+    if (ok) ok = oc_i2c_audio_wr_reg(2, 0x005B);   /* left headphone out */
     usleep(10000);
 
-    if (ok) ok = oc_i2c_audio_wr_reg(3, 0x005B);   /* right headphone out default */
+    if (ok) ok = oc_i2c_audio_wr_reg(3, 0x005B);   /* right headphone out */
     usleep(10000);
 
-    if (ok) ok = oc_i2c_audio_wr_reg(4, 0x0010);  /* DACSEL only */
+    if (ok) ok = oc_i2c_audio_wr_reg(4, 0x0015 | 0x20 | 0x08 | 0x01);   /* DACSEL only */
     usleep(10000);
 
     if (ok) ok = oc_i2c_audio_wr_reg(5, 0x0000);   /* digital path: no mute */
@@ -266,11 +268,10 @@ int init_audio(void) {
     if (ok) ok = oc_i2c_audio_wr_reg(7, 0x0042);   /* I2S, 16-bit, master mode */
     usleep(10000);
 
-    /*
-     * Primero dejamos base normal como en tu código viejo.
-     */
-    if (ok) ok = oc_i2c_audio_wr_reg(8, 0x0002);
-    usleep(10000);
+    if (ok) ok = oc_i2c_audio_wr_reg(8, 0x0002);   /* I2S, 16-bit, master mode */
+        usleep(10000);
+
+    /* reg 8 se escribe UNA SOLA VEZ en la segunda etapa — no aqui */
 
     if (ok) ok = oc_i2c_audio_wr_reg(9, 0x0001);   /* active interface */
     usleep(10000);
@@ -280,11 +281,7 @@ int init_audio(void) {
         return 0;
     }
 
-    /*
-     * Segunda etapa:
-     * desactivar, soft mute, mutear entradas, quitar mute, volumen, limpiar FIFO,
-     * sample rate 32k, activar.
-     */
+    /* Segunda etapa */
 
     if (ok) ok = audio_interface_active(0);
     usleep(10000);
@@ -308,12 +305,6 @@ int init_audio(void) {
     usleep(10000);
 
     audio_fifo_clear();
-    usleep(10000);
-
-    /*
-     * audio_set_sample_rate_44k1().
-     */
-    if (ok) ok = audio_set_sample_rate_44k1();
     usleep(10000);
 
     if (ok) ok = audio_set_sample_rate_32k();

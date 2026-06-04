@@ -1,5 +1,5 @@
 Analysis & Synthesis report for soc_system
-Wed Jun 03 11:53:16 2026
+Wed Jun 03 17:37:34 2026
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -646,7 +646,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed Jun 03 11:53:15 2026       ;
+; Analysis & Synthesis Status     ; Successful - Wed Jun 03 17:37:34 2026       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; soc_system                                  ;
 ; Top-level Entity Name           ; ghrd_top                                    ;
@@ -15891,7 +15891,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Wed Jun 03 11:49:26 2026
+    Info: Processing started: Wed Jun 03 17:33:51 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off soc_system -c soc_system
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
@@ -16786,7 +16786,7 @@ Info (12128): Elaborating entity "altera_edge_detector" for hierarchy "altera_ed
 Info (12128): Elaborating entity "altera_edge_detector" for hierarchy "altera_edge_detector:pulse_debug_reset" File: C:/fpga/DE1-SoC-MyPlayer-master/ghrd_top.v Line: 353
 Warning (12010): Port "probe" on the entity instantiation of "altsource_probe_component" is connected to a signal of width 1. The formal width of the signal in the module is 2.  The extra bits will be driven by GND. File: C:/fpga/DE1-SoC-MyPlayer-master/ip/altsource_probe/hps_reset.v Line: 74
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2026.06.03.11:50:00 Progress: Loading sldce0f4758/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2026.06.03.17:34:18 Progress: Loading sldce0f4758/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -17107,10 +17107,10 @@ Info (21057): Implemented 8428 device resources after synthesis - the final reso
     Info (21065): Implemented 1 PLLs
     Info (21066): Implemented 1 delay-locked loops
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 311 warnings
-    Info: Peak virtual memory: 5378 megabytes
-    Info: Processing ended: Wed Jun 03 11:53:16 2026
-    Info: Elapsed time: 00:03:50
-    Info: Total CPU time (on all processors): 00:04:05
+    Info: Peak virtual memory: 5359 megabytes
+    Info: Processing ended: Wed Jun 03 17:37:34 2026
+    Info: Elapsed time: 00:03:43
+    Info: Total CPU time (on all processors): 00:03:58
 
 
 +------------------------------------------+

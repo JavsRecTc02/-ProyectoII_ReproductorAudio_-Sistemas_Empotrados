@@ -125,6 +125,7 @@ static int play_one_buffer(uint32_t buffer_word_offset, uint32_t size_words) {
 
         audio_dac_fifo_set_data(left, right);
         local_played++;
+        usleep(10);
     }
 
     shm_write(SHM_TOTAL_WORDS_PLAYED,

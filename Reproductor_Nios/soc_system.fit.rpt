@@ -1,5 +1,5 @@
 Fitter report for soc_system
-Wed Jun 03 11:56:02 2026
+Wed Jun 03 17:40:16 2026
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -68,7 +68,7 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Fitter Summary                                                                ;
 +---------------------------------+---------------------------------------------+
-; Fitter Status                   ; Successful - Wed Jun 03 11:56:02 2026       ;
+; Fitter Status                   ; Successful - Wed Jun 03 17:40:16 2026       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; soc_system                                  ;
 ; Top-level Entity Name           ; ghrd_top                                    ;
@@ -159,22 +159,22 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 12          ;
 ; Maximum allowed            ; 12          ;
 ;                            ;             ;
-; Average used               ; 1.30        ;
+; Average used               ; 1.31        ;
 ; Maximum used               ; 12          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   3.7%      ;
-;     Processor 3            ;   3.5%      ;
-;     Processor 4            ;   3.4%      ;
-;     Processor 5            ;   2.6%      ;
-;     Processor 6            ;   2.6%      ;
-;     Processor 7            ;   2.6%      ;
-;     Processor 8            ;   2.5%      ;
-;     Processor 9            ;   2.3%      ;
-;     Processor 10           ;   2.3%      ;
-;     Processor 11           ;   2.3%      ;
-;     Processor 12           ;   2.3%      ;
+;     Processor 2            ;   3.9%      ;
+;     Processor 3            ;   3.6%      ;
+;     Processor 4            ;   3.5%      ;
+;     Processor 5            ;   2.7%      ;
+;     Processor 6            ;   2.7%      ;
+;     Processor 7            ;   2.7%      ;
+;     Processor 8            ;   2.6%      ;
+;     Processor 9            ;   2.4%      ;
+;     Processor 10           ;   2.4%      ;
+;     Processor 11           ;   2.4%      ;
+;     Processor 12           ;   2.4%      ;
 +----------------------------+-------------+
 
 
@@ -5339,7 +5339,7 @@ Info (170195): Router estimated average interconnect usage is 3% of the availabl
 Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
     Info (170201): Optimizations that may affect the design's routability were skipped
 Info (170194): Fitter routing operations ending: elapsed time is 00:00:12
-Info (11888): Total time spent on timing analysis during the Fitter is 14.55 seconds.
+Info (11888): Total time spent on timing analysis during the Fitter is 14.75 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
@@ -5527,10 +5527,10 @@ Info (169186): Following groups of pins have the same dynamic on-chip terminatio
         Info (169066): Type bi-directional pin HPS_DDR3_DQS_P[3] uses the Differential 1.5-V SSTL Class I I/O standard File: C:/fpga/DE1-SoC-MyPlayer-master/ghrd_top.v Line: 90
 Info (144001): Generated suppressed messages file C:/fpga/DE1-SoC-MyPlayer-master/soc_system.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 160 warnings
-    Info: Peak virtual memory: 8390 megabytes
-    Info: Processing ended: Wed Jun 03 11:56:05 2026
-    Info: Elapsed time: 00:02:48
-    Info: Total CPU time (on all processors): 00:13:21
+    Info: Peak virtual memory: 8373 megabytes
+    Info: Processing ended: Wed Jun 03 17:40:19 2026
+    Info: Elapsed time: 00:02:44
+    Info: Total CPU time (on all processors): 00:13:15
 
 
 +----------------------------+
