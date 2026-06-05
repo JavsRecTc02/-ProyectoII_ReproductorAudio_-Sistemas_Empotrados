@@ -19,6 +19,8 @@
 #include "pcm.h"
 #include "button_control.h"
 #include "display_control.h"
+#include "switch_control.h"
+#include "led_control.h"
 
 #define HW_REGS_BASE (ALT_STM_OFST)
 #define HW_REGS_SPAN (0x04000000)
@@ -33,6 +35,8 @@ volatile unsigned long *audio_addr = NULL;
 volatile unsigned long *button_pio_addr = NULL;
 volatile unsigned long *hex_low_pio_addr = NULL;
 volatile unsigned long *hex_high_pio_addr = NULL;
+volatile unsigned long *dipsw_pio_addr = NULL;
+volatile unsigned long *led_pio_addr = NULL;
 
 static int has_extension(const char *filename, const char *ext)
 {
@@ -213,6 +217,10 @@ int main(int argc, char **argv)
         ((unsigned long)(ALT_LWFPGASLVS_OFST + BUTTON_PIO_BASE) &
          (unsigned long)(HW_REGS_MASK));
 
+    dipsw_pio_addr = virtual_base +
+    ((unsigned long)(ALT_LWFPGASLVS_OFST + DIPSW_PIO_BASE) &
+     (unsigned long)(HW_REGS_MASK));
+
     hex_low_pio_addr = virtual_base +
         ((unsigned long)(ALT_LWFPGASLVS_OFST + HEX_LOW_PIO_BASE) &
         (unsigned long)(HW_REGS_MASK));
@@ -221,16 +229,25 @@ int main(int argc, char **argv)
         ((unsigned long)(ALT_LWFPGASLVS_OFST + HEX_HIGH_PIO_BASE) &
         (unsigned long)(HW_REGS_MASK));
 
+    led_pio_addr = virtual_base +
+    ((unsigned long)(ALT_LWFPGASLVS_OFST + LED_PIO_BASE) &
+     (unsigned long)(HW_REGS_MASK));
+
     printf("[INFO] i2c_audio_addr:  %04Xh\n", (unsigned int)oc_i2c_audio_addr);
     printf("[INFO] audio_addr:      %04Xh\n", (unsigned int)audio_addr);
     printf("[INFO] button_pio_addr: %04Xh\n", (unsigned int)button_pio_addr);
     printf("[INFO] hex_low_pio_addr:  %04Xh\n", (unsigned int)hex_low_pio_addr);
     printf("[INFO] hex_high_pio_addr: %04Xh\n", (unsigned int)hex_high_pio_addr);
+    printf("[INFO] dipsw_pio_addr: %04Xh\n", (unsigned int)dipsw_pio_addr);
+    printf("[INFO] led_pio_addr: %04Xh\n", (unsigned int)led_pio_addr);
 
     oc_i2c_audio_init();
     init_audio();
     buttons_init();
+    switches_init();
+    leds_init();
     display_init();
+
 
     usleep(500 * 1000); // Delay necesario antes de iniciar reproducción
 
@@ -335,6 +352,7 @@ int main(int argc, char **argv)
         }
     }
 
+    led_filter_off();
     printf("[INFO] Player stopped\n");
 
     if (munmap(virtual_base, HW_REGS_SPAN) != 0)

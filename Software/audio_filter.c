@@ -117,8 +117,6 @@ static int16_t reverb_process(int16_t input, int16_t *buffer)
  * f0 = 1000 Hz
  * Q  = 0.8
  *
- * El resultado es un efecto tipo "radio/telefono", util para notar
- * rapidamente que el filtro esta funcionando.
  */
 
 typedef struct

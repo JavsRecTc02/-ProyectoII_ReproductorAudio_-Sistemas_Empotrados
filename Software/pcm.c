@@ -8,6 +8,8 @@
 #include "button_control.h"
 #include "display_control.h"
 #include "audio_filter.h"
+#include "switch_control.h"
+#include "led_control.h"
 #define PCM_SAMPLE_RATE 32000
 
 typedef enum
@@ -40,7 +42,11 @@ PlayResult play_PCM(const char *filename, int song_number)
      * AUDIO_FILTER_BAND_PASS
      */
 
-    audio_filter_init(AUDIO_FILTER_BAND_PASS);
+    // audio_filter_init(AUDIO_FILTER_BAND_PASS);
+    AudioFilterType current_filter = switches_get_selected_filter();
+    audio_filter_init(current_filter);
+    led_filter_set_active(current_filter != AUDIO_FILTER_NONE);
+    printf("[INFO] Audio filter: %s\n", switches_get_filter_name(current_filter));
 
     uint8_t sample[4];
     PlayerState state = PLAYER_PLAYING;
@@ -50,6 +56,24 @@ PlayResult play_PCM(const char *filename, int song_number)
     while (1)
     {
         uint32_t events = buttons_get_events();
+
+        if ((frames_played % 1024) == 0)
+        {
+            AudioFilterType selected_filter = switches_get_selected_filter();
+
+            if (selected_filter != current_filter)
+            {
+                current_filter = selected_filter;
+                audio_filter_init(current_filter);
+
+                led_filter_set_active(current_filter != AUDIO_FILTER_NONE);
+
+                printf("[INFO] Audio filter changed: %s\n",
+                    switches_get_filter_name(current_filter));
+
+                AUDIO_FifoClear();
+            }
+        }
 
         if (events & BTN_PLAY_PAUSE)
         {

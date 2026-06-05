@@ -9,7 +9,7 @@ ARCH = arm
 
 build: $(TARGET)
 
-$(TARGET): main.o pcm.o audio_control.o button_control.o display_control.o audio_filter.o
+$(TARGET): main.o pcm.o audio_control.o button_control.o display_control.o audio_filter.o switch_control.o led_control.o
 	$(CC) $(LDFLAGS) $^ -o $@ -static
 
 %.o : %.c
