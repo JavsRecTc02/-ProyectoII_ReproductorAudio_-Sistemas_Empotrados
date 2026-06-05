@@ -15,7 +15,7 @@
 #define MASK_STATUS_DAC_FULL 0x01
 #define MASK_STATUS_ADC_EMPTY 0x02
 
-#define LINEOUT_DEFUALT_VOL 0x79 // 0 dB
+#define LINEOUT_DEFUALT_VOL 0x60 // 0 dB
 
 extern volatile unsigned long *oc_i2c_audio_addr;
 extern volatile unsigned long *audio_addr;

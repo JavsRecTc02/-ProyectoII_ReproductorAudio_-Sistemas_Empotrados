@@ -32,7 +32,7 @@ typedef enum
 #define FALSE 0
 
 #define MAX_TRY_CNT 1024
-#define LINEOUT_DEFUALT_VOL 0x79 // 0 dB
+#define LINEOUT_DEFUALT_VOL 0x60 // 0 dB
 
 void oc_i2c_audio_init(void);
 int oc_i2c_audio_wr_reg(int reg, int data);

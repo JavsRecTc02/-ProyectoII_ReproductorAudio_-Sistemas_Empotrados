@@ -7,6 +7,7 @@
 #include "audio_control.h"
 #include "button_control.h"
 #include "display_control.h"
+#include "audio_filter.h"
 #define PCM_SAMPLE_RATE 32000
 
 typedef enum
@@ -29,6 +30,17 @@ PlayResult play_PCM(const char *filename, int song_number)
     int last_displayed_second = -1;
 
     display_show_song_time(song_number, 0);
+
+    /*
+     * Inicializar filtro 
+     * AUDIO_FILTER_NONE
+     * AUDIO_FILTER_LOW_PASS_FIR
+     * AUDIO_FILTER_HIGH_PASS_IIR
+     * AUDIO_FILTER_REVERB
+     * AUDIO_FILTER_BAND_PASS
+     */
+
+    audio_filter_init(AUDIO_FILTER_BAND_PASS);
 
     uint8_t sample[4];
     PlayerState state = PLAYER_PLAYING;
@@ -86,6 +98,13 @@ PlayResult play_PCM(const char *filename, int song_number)
             continue;
         }
 
+        /*
+         * Cada frame PCM tiene 4 bytes:
+         *
+         * byte 0-1: canal izquierdo, signed 16-bit little endian
+         * byte 2-3: canal derecho, signed 16-bit little endian
+         */
+
         if (fread(sample, 1, 4, fp) != 4)
         {
             printf("[INFO] Song finished\n");
@@ -99,6 +118,7 @@ PlayResult play_PCM(const char *filename, int song_number)
         int16_t sample_r = (int16_t)((uint16_t)sample[2] |
                                      ((uint16_t)sample[3] << 8));
 
+        audio_filter_process_stereo(&sample_l, &sample_r);
         int try_cnt = 0;
 
         while (!AUDIO_DacFifoNotFull() && try_cnt < MAX_TRY_CNT)
