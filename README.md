@@ -33,7 +33,7 @@ El proyecto está compuesto por dos partes principales:
    * Archivo `.qsys` con los periféricos y conexiones del sistema.
    * Archivo HDL generado para integrar el sistema al proyecto principal.
    * Asignación de pines de la DE1-SoC.
-   * Compilación y programación de la FPGA.
+   * Compilación y programación de la FPGA mediante archivo .sof/.rbf.
 
 2. **Software en C para Linux embebido**
 
@@ -50,7 +50,6 @@ El proyecto está compuesto por dos partes principales:
 
 Primero se debe abrir el proyecto principal en **Quartus Prime 18.1 Lite**. Este proyecto contiene la descripción de hardware utilizada para configurar la FPGA y conectar los periféricos necesarios para el funcionamiento del reproductor.
 
----
 
 ### 2. Abrir Platform Designer
 
@@ -58,7 +57,6 @@ Dentro del proyecto de Quartus se utiliza **Platform Designer** para definir el 
 
 El archivo `.qsys` incluye la configuración de los componentes utilizados por el sistema, así como las conexiones entre buses, señales de control, periféricos y memoria mapeada.
 
----
 
 ### 3. Generar el HDL del sistema
 
@@ -73,7 +71,6 @@ Para esto:
 
 Como resultado se genera el archivo necesario para integrar el sistema de Platform Designer dentro del proyecto de Quartus. Este archivo puede aparecer como un archivo HDL o como parte de los archivos generados, por ejemplo en formato `.qip`.
 
----
 
 ### 4. Agregar el archivo generado al proyecto de Quartus
 
@@ -89,7 +86,6 @@ Project > Add/Remove Files in Project
 
 Luego se selecciona el archivo correspondiente generado.
 
----
 
 ### 5. Asignar pines
 
@@ -99,7 +95,6 @@ La asignación de pines depende de los periféricos utilizados en el diseño, po
 
 La asignación se realiza desde el **Pin Planner** de Quartus.
 
----
 
 ### 6. Compilar el diseño
 
@@ -109,7 +104,6 @@ Para esto se utiliza **Compile Design**.
 
 Si la compilación finaliza correctamente, Quartus generará el archivo de programación necesario para cargar el diseño en la FPGA.
 
----
 
 ### 7. Programar la FPGA
 
@@ -132,13 +126,10 @@ Para ejecutar el sistema desde la DE1-SoC, es necesario bootear la tarjeta con u
 
 ### 1. Descargar la imagen de Linux
 
-La imagen puede descargarse desde la página oficial de Terasic:
-
-[Descargar imagen Linux Console para DE1-SoC](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=165&No=836&PartNo=4)
+La imagen puede descargarse desde la página oficial de Terasic: [Ver requisitos](#requisitos)
 
 Se debe seleccionar una imagen compatible con Linux Console para la DE1-SoC, para este caso se utilizó la imagen mínima de Linux Console.
 
----
 
 ### 2. Iniciar Linux en la FPGA
 
@@ -160,7 +151,7 @@ Primero se puede asignar una dirección IP personalizada a la FPGA desde la cons
 ifconfig eth0 <ip_fpga>
 ```
 
-La computadora debe estar en la misma red que la FPGA para poder transferir archivos mediante `scp`.
+La computadora debe estar en la misma red que la FPGA para poder transferir archivos mediante `scp` o `ssh`.
 
 ---
 
@@ -201,13 +192,13 @@ Ejemplo de estructura:
 
 ## Ejecución del sistema de forma Manual
 
-Desde la consola Linux de la FPGA con PuTTY, se debe ingresar a la carpeta donde se encuentra el ejecutable:
+Una vez programada la FPGA desde Quartus, se debe acceder a la consola Linux de la DE1-SoC mediante una conexión serial utilizando PuTTY. Desde la consola, se debe ingresar al directorio donde se encuentra el ejecutable del reproductor.
 
 ```bash
 cd /home/root
 ```
 
-Si es necesario, se deben dar permisos de ejecución al binario:
+Si es necesario, se deben dar permisos de ejecución al ejecutable:
 
 ```bash
 chmod +x Ejecutable
@@ -227,7 +218,6 @@ El programa tomará la carpeta indicada como entrada y utilizará los archivos d
 
 Además de programar la FPGA manualmente desde Quartus, el sistema puede configurarse para que la FPGA sea programada automáticamente durante el arranque mediante **U-Boot**. Posteriormente, Linux inicia el reproductor de forma automática mediante un script de arranque.
 
----
 
 ### Conversión de `.sof` a `.rbf`
 
@@ -284,7 +274,6 @@ Estos comandos realizan lo siguiente:
 
 Si la carga se realiza correctamente, Linux inicia con la FPGA ya programada.
 
----
 
 ### Configuración permanente de U-Boot
 
@@ -310,8 +299,10 @@ saveenv
 
 Con esta configuración, cada vez que la tarjeta inicia, U-Boot carga automáticamente `soc_system.rbf`, programa la FPGA y luego continúa con el arranque de Linux.
 
-Resultado esperado:
+Resultado obtenido:
 
+| Evidencia 1 | 
+| -------- | 
 | ![boot](docs/boot_Uboot.png)| 
 
 ---
@@ -364,38 +355,12 @@ ls -l /etc/rc5.d/S99myplayer
 
 Con esto, al finalizar el arranque de Linux, se ejecuta automáticamente el script `myplayer`, iniciando la reproducción de audio sin necesidad de ingresar manualmente el comando.
 
-Resultados esperados:
+Resultado Obtenido:
 
 
-| ![daemon1](docs/Daemon1.png)| ![daemon2](docs/Daemon2.png) |
-
-
-
----
-
-## Flujo final de arranque automático
-
-El flujo completo del sistema queda de la siguiente forma:
-
-```text
-Encendido de la DE1-SoC
-        ↓
-U-Boot inicia
-        ↓
-U-Boot carga soc_system.rbf desde la partición boot
-        ↓
-U-Boot programa la FPGA
-        ↓
-Se ejecutan los comandos normales de arranque de Linux
-        ↓
-Linux inicia
-        ↓
-Se ejecuta /etc/init.d/myplayer desde rc5.d
-        ↓
-MyPlayer inicia automáticamente con la carpeta songs
-        ↓
-El sistema queda reproduciendo audio y listo para controlarse con botones y switches
-```
+| Evidencia 2 | Evidencia 3 |
+| -------- | -------- |
+| ![daemon1](docs/Daemon1.png) | ![daemon2](docs/Daemon2.png) |
 
 ---
 ## Funcionalidades desarrolladas
@@ -422,9 +387,7 @@ El sistema permite seleccionar filtros digitales de audio mediante los switches 
 | `SW2` | Filtro pasa-altos | Atenúa las frecuencias bajas y permite el paso de frecuencias altas. |
 | `SW3` | Filtro pasa-bajos | Atenúa las frecuencias altas y permite el paso de frecuencias bajas. |
 
-Cuando todos los switches `SW0` a `SW3` están apagados, el sistema trabaja en modo normal, sin aplicar filtros al audio. En este caso se utiliza el modo `AUDIO_FILTER_NONE` o bypass.
-
-Si se activa más de un switch al mismo tiempo, el sistema utiliza un orden de prioridad para seleccionar el filtro activo.
+Cuando todos los switches `SW0` a `SW3` están apagados, el sistema trabaja en modo normal, sin aplicar filtros al audio. En este caso se utiliza el modo `AUDIO_FILTER_NONE` o bypass. Si se activa más de un switch al mismo tiempo, el sistema utiliza un orden de prioridad para seleccionar el filtro activo.
 
 ### Indicador de filtro activo
 
