@@ -74,6 +74,31 @@ static int is_regular_file(const char *path)
     return S_ISREG(st.st_mode);
 }
 
+static int is_generated_pcm_duplicate(const char *directory, const char *filename)
+{
+    char original_filename[MAX_PATH_LEN];
+    char original_path[MAX_PATH_LEN];
+    size_t len;
+
+    if (!has_extension(filename, ".pcm"))
+        return 0;
+
+    len = strlen(filename);
+
+    if (len <= 4)
+        return 0;
+
+    strncpy(original_filename, filename, MAX_PATH_LEN - 1);
+    original_filename[MAX_PATH_LEN - 1] = '\0';
+
+    original_filename[len - 4] = '\0';
+
+    snprintf(original_path, MAX_PATH_LEN, "%s/%s", directory, original_filename);
+
+    return is_regular_file(original_path);
+}
+
+
 static int is_directory(const char *path)
 {
     struct stat st;
@@ -104,6 +129,9 @@ static int build_playlist_from_directory(const char *directory,
             continue;
 
         if (!is_audio_file(entry->d_name))
+            continue;
+
+        if (is_generated_pcm_duplicate(directory, entry->d_name))
             continue;
 
         snprintf(songs[count], MAX_PATH_LEN, "%s/%s", directory, entry->d_name);
