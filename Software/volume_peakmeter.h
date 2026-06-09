@@ -34,4 +34,6 @@ void apply_volume_if_changed(void);
 /* Lee el peak actual (8 bits, uno por LED) */
 uint8_t peakmeter_get_peak(void);
 
+uint8_t peakmeter_get_button_event(void);
+
 #endif /* VOLUME_PEAKMETER_H */

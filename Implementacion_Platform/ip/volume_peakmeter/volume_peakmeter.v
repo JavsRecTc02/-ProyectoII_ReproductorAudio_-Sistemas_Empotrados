@@ -2,7 +2,7 @@ module volume_peakmeter (
     // Avalon-MM Slave
     input        clk,
     input        reset,
-    input  [1:0] address,
+    input  [2:0] address,
     input        read,
     output reg [31:0] readdata,
     input        write,
@@ -11,6 +11,7 @@ module volume_peakmeter (
     // Encoder KY-040
     input        enc_a,
     input        enc_b,
+    input        enc_sw,
 
     // LEDs
     output reg [9:0] leds
@@ -178,15 +179,17 @@ reg [1:0] play_state;
 always @(posedge clk or posedge reset) begin
     if (reset)
         play_state <= 2'b00;
-    else if (write && address == 2'h1)
+    else if (write && address == 3'h1)
         play_state <= writedata[1:0];
 end
 
 always @(*) begin
     case (address)
-        2'h0: readdata = {24'b0, peak_leds};
-        2'h1: readdata = {30'b0, play_state};
-        2'h2: readdata = {27'b0, vol_level};
+        3'h0: readdata = {24'b0, peak_leds};
+        3'h1: readdata = {30'b0, play_state};
+        3'h2: readdata = {27'b0, vol_level};
+        3'h3: readdata = 32'b0;
+        3'h4: readdata = {31'b0, enc_sw_event};
         default: readdata = 32'b0;
     endcase
 end
@@ -221,6 +224,42 @@ wire led_extreme = (vol_level == 5'd31 || vol_level == 5'd0);
 
 always @(posedge clk) begin
     leds <= {led_state, peak_leds, led_extreme};
+end
+
+// ================================================================
+// 7. DEBOUNCE Y LECTURA DEL BOTON ENC_SW
+// El boton es activo bajo (LOW cuando presionado).
+// Debounce de 20ms = 1,000,000 ciclos a 50MHz.
+// ================================================================
+reg [19:0] sw_debounce_cnt;
+reg        enc_sw_db;
+reg        enc_sw_last;
+reg        enc_sw_prev;
+reg        enc_sw_event; // pulso de un ciclo al detectar press
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        sw_debounce_cnt <= 0;
+        enc_sw_db       <= 1'b1;
+        enc_sw_last     <= 1'b1;
+        enc_sw_prev     <= 1'b1;
+        enc_sw_event    <= 1'b0;
+    end else begin
+        enc_sw_event <= 1'b0;
+
+        if (enc_sw != enc_sw_last) begin
+            sw_debounce_cnt <= 0;
+            enc_sw_last     <= enc_sw;
+        end else if (sw_debounce_cnt < 20'd1_000_000) begin
+            sw_debounce_cnt <= sw_debounce_cnt + 1;
+        end else begin
+            enc_sw_db <= enc_sw_last;
+            // Detectar flanco bajante (press)
+            if (enc_sw_prev && !enc_sw_db)
+                enc_sw_event <= 1'b1;
+            enc_sw_prev <= enc_sw_db;
+        end
+    end
 end
 
 endmodule

@@ -63,6 +63,18 @@ uint8_t peakmeter_get_peak(void) {
     /* STATUS está en offset 0x00 → índice 0 */
     return (uint8_t)(peakmeter_base[0] & 0xFF);
 }
+
+/*
+ * Lee si hubo un evento de press del boton del encoder.
+ * Retorna 1 si fue presionado desde la ultima lectura, 0 si no.
+ * El hardware limpia el evento automaticamente cada ciclo.
+ */
+uint8_t peakmeter_get_button_event(void) {
+    if (peakmeter_base == NULL) return 0;
+    /* BTN esta en offset 0x10 → indice 4 */
+    return (uint8_t)(peakmeter_base[4] & 0x1);
+}
+
 void apply_volume_if_changed(void)
 {
     static uint8_t last_volume = 255;

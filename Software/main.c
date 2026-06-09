@@ -22,6 +22,7 @@
 #include "switch_control.h"
 #include "led_control.h"
 #include "volume_peakmeter.h"
+#include "lcd_i2c.h"
 
 #define HW_REGS_BASE (ALT_STM_OFST)
 #define HW_REGS_SPAN (0x04000000)
@@ -277,6 +278,10 @@ int main(int argc, char **argv)
      (unsigned long)(HW_REGS_MASK));
 
     peakmeter_init((void *)h2p_lw_axi_addr);
+    lcd_init((void *)h2p_lw_axi_addr);
+    lcd_clear();
+    lcd_print_centered(0, "ReproductorAudio");
+    lcd_print_centered(1, "Iniciando...");
 
     printf("[INFO] i2c_audio_addr:  %04Xh\n", (unsigned int)oc_i2c_audio_addr);
     printf("[INFO] audio_addr:      %04Xh\n", (unsigned int)audio_addr);

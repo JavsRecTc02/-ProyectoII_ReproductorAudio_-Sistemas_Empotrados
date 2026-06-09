@@ -93,7 +93,9 @@ module soc_system (
 	reset_reset_n,
 	volume_peakmeter_0_external_signals_enc_a,
 	volume_peakmeter_0_external_signals_enc_b,
-	volume_peakmeter_0_external_signals_leds);	
+	volume_peakmeter_0_external_signals_leds,
+	volume_peakmeter_0_external_signals_enc_sw,
+	lcd_pio_external_connection_export);	
 
 	output		audio_if_0_conduit_end_export_xck;
 	input		audio_if_0_conduit_end_export_adcdat;
@@ -189,4 +191,6 @@ module soc_system (
 	input		volume_peakmeter_0_external_signals_enc_a;
 	input		volume_peakmeter_0_external_signals_enc_b;
 	output	[9:0]	volume_peakmeter_0_external_signals_leds;
+	input		volume_peakmeter_0_external_signals_enc_sw;
+	inout	[1:0]	lcd_pio_external_connection_export;
 endmodule

@@ -12,6 +12,7 @@
 #include "led_control.h"
 #include <string.h>
 #include "volume_peakmeter.h"
+#include "lcd_i2c.h"
 
 /*
  * Offset  Tamaño  Descripcion
@@ -40,6 +41,14 @@ typedef struct
     int     duration_seconds;
 } WavMetadata;
 
+typedef enum {
+    META_TITLE = 0,
+    META_ARTIST,
+    META_ALBUM,
+    META_DURATION,
+    META_COUNT
+} MetaField;
+
 #define PCM_SAMPLE_RATE 32000
 
 typedef enum
@@ -48,6 +57,35 @@ typedef enum
     PLAYER_PAUSED
 } PlayerState;
 
+static void lcd_show_meta(const WavMetadata *meta, MetaField field)
+{
+    char line2[17];
+
+    lcd_clear();
+
+    switch (field)
+    {
+        case META_TITLE:
+            lcd_set_cursor(0, 0); lcd_print("Titulo:");
+            strncpy(line2, meta->title, 16); break;
+        case META_ARTIST:
+            lcd_set_cursor(0, 0); lcd_print("Artista:");
+            strncpy(line2, meta->artist, 16); break;
+        case META_ALBUM:
+            lcd_set_cursor(0, 0); lcd_print("Album:");
+            strncpy(line2, meta->album, 16); break;
+        case META_DURATION:
+            lcd_set_cursor(0, 0); lcd_print("Duracion:");
+            snprintf(line2, 17, "%02d:%02d",
+                     meta->duration_seconds / 60,
+                     meta->duration_seconds % 60); break;
+        default: return;
+    }
+
+    line2[16] = '\0';
+    lcd_set_cursor(0, 1);
+    lcd_print(line2);
+}
 
 static void wav_get_path_from_pcm(const char *pcm_path,
                                    char *wav_path,
@@ -352,6 +390,7 @@ PlayResult play_PCM(const char *filename, int song_number)
 
     wav_get_path_from_pcm(filename, wav_path, sizeof(wav_path));
     wav_parse_metadata(wav_path, &meta);
+    lcd_show_meta(&meta, META_TITLE);
 
     printf("\n");
     printf("========================================\n");
@@ -396,6 +435,13 @@ PlayResult play_PCM(const char *filename, int song_number)
     while (1)
     {
         uint32_t events = buttons_get_events();
+        /* Boton del encoder: navegar metadatos en LCD */
+        if (peakmeter_get_button_event())
+        {
+            MetaField current_field = META_TITLE;
+            current_field = (current_field + 1) % META_COUNT;
+            lcd_show_meta(&meta, current_field);
+        }
 
         if ((frames_played % 1024) == 0)
         {

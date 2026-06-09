@@ -317,6 +317,22 @@
          type = "String";
       }
    }
+   element pio_0
+   {
+      datum _sortIndex
+      {
+         value = "17";
+         type = "int";
+      }
+   }
+   element pio_0.s1
+   {
+      datum baseAddress
+      {
+         value = "96";
+         type = "String";
+      }
+   }
    element pll_music
    {
       datum _sortIndex
@@ -454,6 +470,11 @@
    name="hps_0_h2f_warm_reset_handshake"
    internal="hps_0.h2f_warm_reset_handshake" />
  <interface name="hps_0_hps_io" internal="hps_0.hps_io" type="conduit" dir="end" />
+ <interface
+   name="lcd_pio_external_connection"
+   internal="pio_0.external_connection"
+   type="conduit"
+   dir="end" />
  <interface
    name="led_pio_external_connection"
    internal="led_pio.external_connection"
@@ -1174,6 +1195,20 @@
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
  </module>
+ <module name="pio_0" kind="altera_avalon_pio" version="18.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="true" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Bidir" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="2" />
+ </module>
  <module name="pll_music" kind="altera_pll" version="18.1" enabled="1">
   <parameter name="debug_print_output" value="false" />
   <parameter name="debug_use_rbc_taf_method" value="false" />
@@ -1387,8 +1422,10 @@
  <module
    name="volume_peakmeter_0"
    kind="volume_peakmeter"
-   version="1.1"
-   enabled="1" />
+   version="1.2"
+   enabled="1">
+  <parameter name="DEBOUNCE_CYCLES" value="100000" />
+ </module>
  <connection
    kind="avalon"
    version="18.1"
@@ -1491,6 +1528,15 @@
  <connection
    kind="avalon"
    version="18.1"
+   start="hps_0.h2f_lw_axi_master"
+   end="pio_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0060" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="18.1"
    start="master_non_sec.master"
    end="jtag_uart.avalon_jtag_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -1573,6 +1619,7 @@
  <connection kind="clock" version="18.1" start="clk_0.clk" end="jtag_uart.clk" />
  <connection kind="clock" version="18.1" start="clk_0.clk" end="hex_low_pio.clk" />
  <connection kind="clock" version="18.1" start="clk_0.clk" end="hex_high_pio.clk" />
+ <connection kind="clock" version="18.1" start="clk_0.clk" end="pio_0.clk" />
  <connection
    kind="clock"
    version="18.1"
@@ -1721,6 +1768,7 @@
    version="18.1"
    start="clk_0.clk_reset"
    end="volume_peakmeter_0.reset" />
+ <connection kind="reset" version="18.1" start="clk_0.clk_reset" end="pio_0.reset" />
  <connection
    kind="reset"
    version="18.1"
