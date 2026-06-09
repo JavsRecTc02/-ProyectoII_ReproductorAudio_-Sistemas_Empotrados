@@ -438,8 +438,8 @@ PlayResult play_PCM(const char *filename, int song_number)
         /* Boton del encoder: navegar metadatos en LCD */
         if (peakmeter_get_button_event())
         {
-            MetaField current_field = META_TITLE;
-            current_field = (current_field + 1) % META_COUNT;
+            peakmeter_clear_button_event();  // W1C
+            current_field = (MetaField)((current_field + 1) % META_COUNT);
             lcd_show_meta(&meta, current_field);
         }
 

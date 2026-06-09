@@ -31,6 +31,8 @@ void peakmeter_write_audio_sample(int16_t sample);
 
 void apply_volume_if_changed(void);
 
+void peakmeter_clear_button_event(void);
+
 /* Lee el peak actual (8 bits, uno por LED) */
 uint8_t peakmeter_get_peak(void);
 

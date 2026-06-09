@@ -95,3 +95,8 @@ void apply_volume_if_changed(void)
     AUDIO_SetLineOutVol(wm_vol, wm_vol);
     printf("[INFO] Volumen: %d/31 (WM8731: 0x%02X)\n", vol, wm_vol);
 }
+
+void peakmeter_clear_button_event(void) {
+    if (peakmeter_base == NULL) return;
+    peakmeter_base[4] = 0x1; // W1C
+}

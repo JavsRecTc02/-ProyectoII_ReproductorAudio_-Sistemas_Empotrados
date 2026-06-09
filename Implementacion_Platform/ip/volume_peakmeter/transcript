@@ -1,7 +1,7 @@
 # vlib work
 # ** Warning: (vlib-34) Library already exists at "work".
 #  vlog volume_peakmeter.v volume_peakmeter_tb.v
-# Start time: 00:04:27 on Jun 09,2026
+# Start time: 03:15:07 on Jun 09,2026
 # vlog volume_peakmeter.v volume_peakmeter_tb.v 
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
 # -- Compiling module volume_peakmeter
@@ -9,11 +9,11 @@
 # 
 # Top level modules:
 # 	volume_peakmeter_tb
-# End time: 00:04:27 on Jun 09,2026, Elapsed time: 0:00:00
+# End time: 03:15:07 on Jun 09,2026, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 #  vsim -lib work volume_peakmeter_tb
 # vsim -lib work volume_peakmeter_tb 
-# Start time: 00:04:27 on Jun 09,2026
+# Start time: 03:15:07 on Jun 09,2026
 # Loading work.volume_peakmeter_tb
 # Loading work.volume_peakmeter
 #  run -all
@@ -21,6 +21,7 @@
 # 
 # === TEST 1: Estado de reproduccion ===
 # [READ] addr=0x1 data=0x00000001
+# [LEDS] leds[9]=0 (debe parpadear a 1Hz)
 # [t=450000] LEDs cambiaron: 1000000000
 # [READ] addr=0x1 data=0x00000002
 # [t=710000] LEDs cambiaron: 0000000000
@@ -39,14 +40,27 @@
 # [t=90001370000] LEDs cambiaron: 0111111110
 # [READ] addr=0x0 data=0x000000ff
 # 
-# === TEST 6: Verificar LEDs ===
+# === TEST 6: Filtro activo (bit 2 de CTRL) ===
+# [t=90002550000] LEDs cambiaron: 0111111111
+# [READ] addr=0x1 data=0x00000001
+# [LEDS] leds[0]=1 (debe ser 1 = filtro activo)
+# [t=90002810000] LEDs cambiaron: 0111111110
+# [READ] addr=0x1 data=0x00000001
+# [LEDS] leds[0]=0 (debe ser 0 = filtro inactivo)
+# 
+# === TEST 7: Boton del encoder ===
+# [READ] addr=0x4 data=0x00000000
+# [READ] addr=0x4 data=0x00000001
+# [READ] addr=0x4 data=0x00000000
+# 
+# === TEST 8: Verificar LEDs finales ===
 # [LEDS] leds[9:0] = 0111111110
 #        leds[9]   = 0 (estado reproduccion)
 #        leds[8:1] = 11111111 (peak meter)
-#        leds[0]   = 0 (vol extremo)
+#        leds[0]   = 0 (filtro activo)
 # 
 # === SIMULACION COMPLETA ===
-# ** Note: $finish    : volume_peakmeter_tb.v(177)
-#    Time: 95002490 ns  Iteration: 0  Instance: /volume_peakmeter_tb
-# End time: 00:04:33 on Jun 09,2026, Elapsed time: 0:00:06
+# ** Note: $finish    : volume_peakmeter_tb.v(191)
+#    Time: 145002970 ns  Iteration: 0  Instance: /volume_peakmeter_tb
+# End time: 03:15:16 on Jun 09,2026, Elapsed time: 0:00:09
 # Errors: 0, Warnings: 0

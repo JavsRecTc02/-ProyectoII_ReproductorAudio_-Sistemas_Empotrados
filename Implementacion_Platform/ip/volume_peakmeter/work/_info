@@ -9,13 +9,13 @@ z2
 cModel Technology
 Z0 dC:/Users/kenda/OneDrive/Desktop/Empotrados/-Proyecto_II_Co-dise-o-Hardware-Software---Sistemas_Empotrados/Implementacion_Platform/ip/volume_peakmeter
 vvolume_peakmeter
-Z1 !s110 1780985067
+Z1 !s110 1780996507
 !i10b 1
-!s100 >TdPOoD<RVkR^nzdoL?hZ2
-I=;ZZo>I]H=BbhzNfRL^N21
+!s100 :g?Bhh;cTXj=YYh:e=Td71
+I9k2XU?dI25i8f^i7]62Mh3
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 R0
-w1780985060
+w1780996353
 8volume_peakmeter.v
 Fvolume_peakmeter.v
 L0 1
@@ -23,7 +23,7 @@ Z3 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z4 !s108 1780985067.000000
+Z4 !s108 1780996507.000000
 Z5 !s107 volume_peakmeter_tb.v|volume_peakmeter.v|
 Z6 !s90 volume_peakmeter.v|volume_peakmeter_tb.v|
 !i113 1
@@ -31,11 +31,11 @@ Z7 tCvgOpt 0
 vvolume_peakmeter_tb
 R1
 !i10b 1
-!s100 ATzHOC]5^1<MbMZVVY6b80
-ID1lFnW7P@9emS^5?^PX[S2
+!s100 :k;TVZe?nCbQXJ2DQzViS0
+Im1DSn>T_5iKP0V6R3fG2^1
 R2
 R0
-w1780984966
+w1780996504
 8volume_peakmeter_tb.v
 Fvolume_peakmeter_tb.v
 L0 3
