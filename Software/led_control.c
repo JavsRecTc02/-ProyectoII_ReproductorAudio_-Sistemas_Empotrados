@@ -1,65 +1,46 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "socal/socal.h"
 #include "led_control.h"
+#include "volume_peakmeter.h"
 
-#define PIO_DATA_REG 0
-
-#define LED_FILTER_ACTIVE_MASK (1u << 8)
-#define LED_ALL_MASK           0x3FFu
-
-extern volatile unsigned long *led_pio_addr;
+/*
+ * led_control.c
+ *
+ * El indicador de filtro activo ahora se controla via el modulo
+ * volume_peakmeter (registro CTRL, bit 2) en lugar del led_pio
+ * generico. Esto permite que LEDR[0] sea controlado por hardware
+ * de forma consistente con el resto de los LEDs.
+ */
 
 void leds_init(void)
 {
-    uint32_t value;
-
-    /*
-     * Leer estado actual de LEDs.
-     * El PIO tiene 10 bits, por eso se usa mascara 0x3FF.
-     */
-    value = alt_read_word(led_pio_addr + PIO_DATA_REG) & LED_ALL_MASK;
-
-    /*
-     * Apagar LED9 al iniciar.
-     */
-    value &= ~LED_FILTER_ACTIVE_MASK;
-
-    alt_write_word(led_pio_addr + PIO_DATA_REG, value);
-
-    printf("[INFO] LED filter indicator initialized\n");
-    printf("[INFO] LED9 = Filter active indicator\n");
-    printf("[INFO] LED initial value = 0x%03X\n", value);
+    /* El modulo peakmeter ya inicializa filter_active=0 en reset */
+    printf("[INFO] LED filter indicator initialized (via peakmeter module)\n");
+    printf("[INFO] LEDR[0] = Filter active indicator\n");
 }
 
 void led_filter_set_active(int active)
 {
-    uint32_t value;
+    if (peakmeter_base == NULL)
+        return;
 
     /*
-     * Leer el valor actual para no modificar LED0-LED8.
+     * Leer play_state actual del registro CTRL para no pisarlo.
+     * CTRL[1:0] = play_state
+     * CTRL[2]   = filter_active
      */
-    value = alt_read_word(led_pio_addr + PIO_DATA_REG) & LED_ALL_MASK;
+    uint32_t ctrl = peakmeter_base[1] & 0x3;
 
     if (active)
-    {
-        value |= LED_FILTER_ACTIVE_MASK;
-    }
+        ctrl |= 0x4;
     else
-    {
-        value &= ~LED_FILTER_ACTIVE_MASK;
-    }
+        ctrl &= ~0x4;
 
-    alt_write_word(led_pio_addr + PIO_DATA_REG, value);
+    peakmeter_base[1] = ctrl;
 
-    /*
-     * Debug opcional.
-     * Puedes dejarlo mientras pruebas y luego comentarlo.
-     */
-    printf("[DEBUG] LED9 %s, led_pio = 0x%03X\n",
-           active ? "ON" : "OFF",
-           value);
+    printf("[DEBUG] LED filtro %s (CTRL=0x%X)\n",
+           active ? "ON" : "OFF", ctrl);
 }
 
 void led_filter_on(void)
@@ -74,19 +55,19 @@ void led_filter_off(void)
 
 void led_debug_write(uint32_t value)
 {
-    value &= LED_ALL_MASK;
-    alt_write_word(led_pio_addr + PIO_DATA_REG, value);
-
+    if (peakmeter_base == NULL) return;
+    /* Escribe directamente al registro CTRL preservando play_state */
+    uint32_t ctrl = peakmeter_base[1] & 0x3;
+    if (value & 0x1) ctrl |= 0x4;
+    else ctrl &= ~0x4;
+    peakmeter_base[1] = ctrl;
     printf("[DEBUG] LED write = 0x%03X\n", value);
 }
 
 uint32_t led_debug_read(void)
 {
-    uint32_t value;
-
-    value = alt_read_word(led_pio_addr + PIO_DATA_REG) & LED_ALL_MASK;
-
+    if (peakmeter_base == NULL) return 0;
+    uint32_t value = peakmeter_base[1] & 0x4 ? 1 : 0;
     printf("[DEBUG] LED read = 0x%03X\n", value);
-
     return value;
 }

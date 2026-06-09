@@ -10,4 +10,4 @@ void led_filter_off(void);
 void led_debug_write(uint32_t value);
 uint32_t led_debug_read(void);
 
-#endif
+#endif /* LED_CONTROL_H */

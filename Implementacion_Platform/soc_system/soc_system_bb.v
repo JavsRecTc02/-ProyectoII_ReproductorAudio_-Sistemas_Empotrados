@@ -71,6 +71,7 @@ module soc_system (
 	hps_0_hps_io_hps_io_gpio_inst_GPIO53,
 	hps_0_hps_io_hps_io_gpio_inst_GPIO54,
 	hps_0_hps_io_hps_io_gpio_inst_GPIO61,
+	lcd_pio_external_connection_export,
 	led_pio_external_connection_export,
 	memory_mem_a,
 	memory_mem_ba,
@@ -94,8 +95,7 @@ module soc_system (
 	volume_peakmeter_0_external_signals_enc_a,
 	volume_peakmeter_0_external_signals_enc_b,
 	volume_peakmeter_0_external_signals_leds,
-	volume_peakmeter_0_external_signals_enc_sw,
-	lcd_pio_external_connection_export);	
+	volume_peakmeter_0_external_signals_enc_sw);	
 
 	output		audio_if_0_conduit_end_export_xck;
 	input		audio_if_0_conduit_end_export_adcdat;
@@ -168,6 +168,7 @@ module soc_system (
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO53;
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO54;
 	inout		hps_0_hps_io_hps_io_gpio_inst_GPIO61;
+	inout	[1:0]	lcd_pio_external_connection_export;
 	output	[9:0]	led_pio_external_connection_export;
 	output	[14:0]	memory_mem_a;
 	output	[2:0]	memory_mem_ba;
@@ -192,5 +193,4 @@ module soc_system (
 	input		volume_peakmeter_0_external_signals_enc_b;
 	output	[9:0]	volume_peakmeter_0_external_signals_leds;
 	input		volume_peakmeter_0_external_signals_enc_sw;
-	inout	[1:0]	lcd_pio_external_connection_export;
 endmodule

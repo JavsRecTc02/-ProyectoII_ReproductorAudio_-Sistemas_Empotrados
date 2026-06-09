@@ -1422,7 +1422,7 @@
  <module
    name="volume_peakmeter_0"
    kind="volume_peakmeter"
-   version="1.2"
+   version="1.4"
    enabled="1">
   <parameter name="DEBOUNCE_CYCLES" value="100000" />
  </module>

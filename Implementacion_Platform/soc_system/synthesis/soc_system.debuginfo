@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="soc_system" kind="system" version="18.1" fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2026.06.09.02:10:07 -->
+ <!-- 2026.06.09.02:49:48 -->
  <!-- A collection of modules and connections -->
  <parameter name="clockCrossingAdapter">
   <type>com.altera.sopcmodel.ensemble.EClockAdapter</type>
@@ -53,7 +53,7 @@
  </parameter>
  <parameter name="generationId">
   <type>int</type>
-  <value>1780992559</value>
+  <value>1780994942</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>true</visible>
@@ -55190,7 +55190,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1780992559</value>
+   <value>1780994942</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -55210,7 +55210,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1780992559</value>
+   <value>1780994942</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -55226,7 +55226,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1780992559</value>
+   <value>1780994942</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -55686,7 +55686,7 @@ parameters are a RESULT of the module parameters. -->
  <module
    name="volume_peakmeter_0"
    kind="volume_peakmeter"
-   version="1.3"
+   version="1.4"
    path="volume_peakmeter_0">
   <!-- Describes a single module. Module parameters are
 the requested settings for a module instance. -->
@@ -68430,7 +68430,7 @@ parameters are a RESULT of the module parameters. -->
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IModule</subtype>
   <displayName><![CDATA[Volume & Peak Meter]]></displayName>
-  <version>1.3</version>
+  <version>1.4</version>
  </plugin>
  <plugin>
   <instanceCount>2</instanceCount>
@@ -68513,5 +68513,5 @@ parameters are a RESULT of the module parameters. -->
   <version>18.1</version>
  </plugin>
  <reportVersion>18.1 625</reportVersion>
- <uniqueIdentifier>E848B8C820000000019EAB6DE964</uniqueIdentifier>
+ <uniqueIdentifier>E848B8C820000000019EAB924290</uniqueIdentifier>
 </EnsembleReport>

@@ -71,6 +71,7 @@
 			hps_0_hps_io_hps_io_gpio_inst_GPIO53       : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO53
 			hps_0_hps_io_hps_io_gpio_inst_GPIO54       : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO54
 			hps_0_hps_io_hps_io_gpio_inst_GPIO61       : inout std_logic                     := 'X';             -- hps_io_gpio_inst_GPIO61
+			lcd_pio_external_connection_export         : inout std_logic_vector(1 downto 0)  := (others => 'X'); -- export
 			led_pio_external_connection_export         : out   std_logic_vector(9 downto 0);                     -- export
 			memory_mem_a                               : out   std_logic_vector(14 downto 0);                    -- mem_a
 			memory_mem_ba                              : out   std_logic_vector(2 downto 0);                     -- mem_ba
@@ -94,8 +95,7 @@
 			volume_peakmeter_0_external_signals_enc_a  : in    std_logic                     := 'X';             -- enc_a
 			volume_peakmeter_0_external_signals_enc_b  : in    std_logic                     := 'X';             -- enc_b
 			volume_peakmeter_0_external_signals_leds   : out   std_logic_vector(9 downto 0);                     -- leds
-			volume_peakmeter_0_external_signals_enc_sw : in    std_logic                     := 'X';             -- enc_sw
-			lcd_pio_external_connection_export         : inout std_logic_vector(1 downto 0)  := (others => 'X')  -- export
+			volume_peakmeter_0_external_signals_enc_sw : in    std_logic                     := 'X'              -- enc_sw
 		);
 	end component soc_system;
 
@@ -172,6 +172,7 @@
 			hps_0_hps_io_hps_io_gpio_inst_GPIO53       => CONNECTED_TO_hps_0_hps_io_hps_io_gpio_inst_GPIO53,       --                                    .hps_io_gpio_inst_GPIO53
 			hps_0_hps_io_hps_io_gpio_inst_GPIO54       => CONNECTED_TO_hps_0_hps_io_hps_io_gpio_inst_GPIO54,       --                                    .hps_io_gpio_inst_GPIO54
 			hps_0_hps_io_hps_io_gpio_inst_GPIO61       => CONNECTED_TO_hps_0_hps_io_hps_io_gpio_inst_GPIO61,       --                                    .hps_io_gpio_inst_GPIO61
+			lcd_pio_external_connection_export         => CONNECTED_TO_lcd_pio_external_connection_export,         --         lcd_pio_external_connection.export
 			led_pio_external_connection_export         => CONNECTED_TO_led_pio_external_connection_export,         --         led_pio_external_connection.export
 			memory_mem_a                               => CONNECTED_TO_memory_mem_a,                               --                              memory.mem_a
 			memory_mem_ba                              => CONNECTED_TO_memory_mem_ba,                              --                                    .mem_ba
@@ -195,7 +196,6 @@
 			volume_peakmeter_0_external_signals_enc_a  => CONNECTED_TO_volume_peakmeter_0_external_signals_enc_a,  -- volume_peakmeter_0_external_signals.enc_a
 			volume_peakmeter_0_external_signals_enc_b  => CONNECTED_TO_volume_peakmeter_0_external_signals_enc_b,  --                                    .enc_b
 			volume_peakmeter_0_external_signals_leds   => CONNECTED_TO_volume_peakmeter_0_external_signals_leds,   --                                    .leds
-			volume_peakmeter_0_external_signals_enc_sw => CONNECTED_TO_volume_peakmeter_0_external_signals_enc_sw, --                                    .enc_sw
-			lcd_pio_external_connection_export         => CONNECTED_TO_lcd_pio_external_connection_export          --         lcd_pio_external_connection.export
+			volume_peakmeter_0_external_signals_enc_sw => CONNECTED_TO_volume_peakmeter_0_external_signals_enc_sw  --                                    .enc_sw
 		);
 

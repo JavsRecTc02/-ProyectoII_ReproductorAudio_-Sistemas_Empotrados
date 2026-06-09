@@ -59,6 +59,9 @@
 /* Registro 4: botón encoder (read-only) */
 #define VOLUME_PEAKMETER_BTN     0x10  /* R  enc_sw_event [0]: 1=presionado */
 
+#define PLAY_STATE_FILTER_ON  0x4  // bit 2 = filtro activo
+#define PLAY_STATE_FILTER_OFF 0x0
+
 /* Estados de reproduccion */
 #define PLAY_STATE_STOP  0x0
 #define PLAY_STATE_PLAY  0x1

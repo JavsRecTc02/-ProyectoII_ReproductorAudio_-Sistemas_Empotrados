@@ -141,7 +141,7 @@ always @(posedge clk or posedge reset) begin
         peak_hold_cnt <= 0;
         peak_leds     <= 0;
         abs_s         <= 0;
-    end else if (write && address == 2'h3) begin
+    end else if (write && address == 3'h3) begin
         abs_s = writedata[15] ? (~writedata[15:0] + 1'b1) : writedata[15:0];
 
         if (abs_s >= peak_val) begin
@@ -175,12 +175,16 @@ end
 // Registro 3 (AUDIO)  : W   - muestra audio (manejado arriba)
 // ================================================================
 reg [1:0] play_state;
+reg       filter_active;
 
 always @(posedge clk or posedge reset) begin
-    if (reset)
-        play_state <= 2'b00;
-    else if (write && address == 3'h1)
-        play_state <= writedata[1:0];
+    if (reset) begin
+        play_state    <= 2'b00;
+        filter_active <= 1'b0;
+    end else if (write && address == 3'h1) begin
+        play_state    <= writedata[1:0];
+        filter_active <= writedata[2];   // <-- nuevo
+    end
 end
 
 always @(*) begin
@@ -220,10 +224,9 @@ end
 
 wire led_state   = (play_state == 2'b01) ? blink_out :
                    (play_state == 2'b10) ? 1'b1 : 1'b0;
-wire led_extreme = (vol_level == 5'd31 || vol_level == 5'd0);
 
 always @(posedge clk) begin
-    leds <= {led_state, peak_leds, led_extreme};
+    leds <= {led_state, peak_leds, filter_active};
 end
 
 // ================================================================

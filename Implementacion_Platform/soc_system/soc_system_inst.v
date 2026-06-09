@@ -70,6 +70,7 @@
 		.hps_0_hps_io_hps_io_gpio_inst_GPIO53       (<connected-to-hps_0_hps_io_hps_io_gpio_inst_GPIO53>),       //                                    .hps_io_gpio_inst_GPIO53
 		.hps_0_hps_io_hps_io_gpio_inst_GPIO54       (<connected-to-hps_0_hps_io_hps_io_gpio_inst_GPIO54>),       //                                    .hps_io_gpio_inst_GPIO54
 		.hps_0_hps_io_hps_io_gpio_inst_GPIO61       (<connected-to-hps_0_hps_io_hps_io_gpio_inst_GPIO61>),       //                                    .hps_io_gpio_inst_GPIO61
+		.lcd_pio_external_connection_export         (<connected-to-lcd_pio_external_connection_export>),         //         lcd_pio_external_connection.export
 		.led_pio_external_connection_export         (<connected-to-led_pio_external_connection_export>),         //         led_pio_external_connection.export
 		.memory_mem_a                               (<connected-to-memory_mem_a>),                               //                              memory.mem_a
 		.memory_mem_ba                              (<connected-to-memory_mem_ba>),                              //                                    .mem_ba
@@ -93,7 +94,6 @@
 		.volume_peakmeter_0_external_signals_enc_a  (<connected-to-volume_peakmeter_0_external_signals_enc_a>),  // volume_peakmeter_0_external_signals.enc_a
 		.volume_peakmeter_0_external_signals_enc_b  (<connected-to-volume_peakmeter_0_external_signals_enc_b>),  //                                    .enc_b
 		.volume_peakmeter_0_external_signals_leds   (<connected-to-volume_peakmeter_0_external_signals_leds>),   //                                    .leds
-		.volume_peakmeter_0_external_signals_enc_sw (<connected-to-volume_peakmeter_0_external_signals_enc_sw>), //                                    .enc_sw
-		.lcd_pio_external_connection_export         (<connected-to-lcd_pio_external_connection_export>)          //         lcd_pio_external_connection.export
+		.volume_peakmeter_0_external_signals_enc_sw (<connected-to-volume_peakmeter_0_external_signals_enc_sw>)  //                                    .enc_sw
 	);
 
