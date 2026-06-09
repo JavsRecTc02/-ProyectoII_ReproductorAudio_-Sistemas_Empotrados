@@ -43,6 +43,25 @@
 #define AUDIO_IF_0_END 0x3f
 
 /*
+ * Macros for device 'volume_peakmeter_0', class 'volume_peakmeter'
+ * The macros are prefixed with 'VOLUME_PEAKMETER_0_'.
+ */
+#define VOLUME_PEAKMETER_0_BASE 0x40
+#define VOLUME_PEAKMETER_0_SPAN 16
+#define VOLUME_PEAKMETER_0_END  0x4f
+
+/* Offsets de registros */
+#define VOLUME_PEAKMETER_STATUS  0x00  /* R    peak_leds [7:0] */
+#define VOLUME_PEAKMETER_CTRL    0x04  /* R/W  play_state: 00=stop 01=play 10=pause */
+#define VOLUME_PEAKMETER_VOLUME  0x08  /* R    vol_level [4:0]: 0-31 */
+#define VOLUME_PEAKMETER_AUDIO   0x0C  /* W    muestra audio 16-bit signed */
+
+/* Estados de reproduccion */
+#define PLAY_STATE_STOP  0x0
+#define PLAY_STATE_PLAY  0x1
+#define PLAY_STATE_PAUSE 0x2
+
+/*
  * Macros for device 'sysid_qsys', class 'altera_avalon_sysid_qsys'
  * The macros are prefixed with 'SYSID_QSYS_'.
  * The prefix is the slave descriptor.

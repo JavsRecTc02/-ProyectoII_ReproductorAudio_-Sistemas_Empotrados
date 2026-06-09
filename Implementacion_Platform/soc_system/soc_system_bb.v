@@ -9,6 +9,8 @@ module soc_system (
 	button_pio_external_connection_export,
 	clk_clk,
 	dipsw_pio_external_connection_export,
+	hex_high_pio_external_connection_export,
+	hex_low_pio_external_connection_export,
 	hps_0_f2h_cold_reset_req_reset_n,
 	hps_0_f2h_debug_reset_req_reset_n,
 	hps_0_f2h_stm_hw_events_stm_hwevents,
@@ -89,8 +91,9 @@ module soc_system (
 	oc_i2c_master_0_conduit_start_export_scl,
 	oc_i2c_master_0_conduit_start_export_sda,
 	reset_reset_n,
-	hex_low_pio_external_connection_export,
-	hex_high_pio_external_connection_export);	
+	volume_peakmeter_0_external_signals_enc_a,
+	volume_peakmeter_0_external_signals_enc_b,
+	volume_peakmeter_0_external_signals_leds);	
 
 	output		audio_if_0_conduit_end_export_xck;
 	input		audio_if_0_conduit_end_export_adcdat;
@@ -101,6 +104,8 @@ module soc_system (
 	input	[3:0]	button_pio_external_connection_export;
 	input		clk_clk;
 	input	[9:0]	dipsw_pio_external_connection_export;
+	output	[13:0]	hex_high_pio_external_connection_export;
+	output	[27:0]	hex_low_pio_external_connection_export;
 	input		hps_0_f2h_cold_reset_req_reset_n;
 	input		hps_0_f2h_debug_reset_req_reset_n;
 	input	[27:0]	hps_0_f2h_stm_hw_events_stm_hwevents;
@@ -181,6 +186,7 @@ module soc_system (
 	inout		oc_i2c_master_0_conduit_start_export_scl;
 	inout		oc_i2c_master_0_conduit_start_export_sda;
 	input		reset_reset_n;
-	output	[27:0]	hex_low_pio_external_connection_export;
-	output	[13:0]	hex_high_pio_external_connection_export;
+	input		volume_peakmeter_0_external_signals_enc_a;
+	input		volume_peakmeter_0_external_signals_enc_b;
+	output	[9:0]	volume_peakmeter_0_external_signals_leds;
 endmodule

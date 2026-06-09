@@ -11,6 +11,7 @@
 #include "switch_control.h"
 #include "led_control.h"
 #include <string.h>
+#include "volume_peakmeter.h"
 
 /*
  * Offset  Tamaño  Descripcion
@@ -419,12 +420,14 @@ PlayResult play_PCM(const char *filename, int song_number)
             if (state == PLAYER_PLAYING)
             {
                 state = PLAYER_PAUSED;
+                peakmeter_set_play_state(PLAY_STATE_PAUSE);
                 printf("[INFO] Paused\n");
                 AUDIO_FifoClear();
             }
             else
             {
                 state = PLAYER_PLAYING;
+                peakmeter_set_play_state(PLAY_STATE_PLAY);
                 printf("[INFO] Playing\n");
             }
 
@@ -491,6 +494,7 @@ PlayResult play_PCM(const char *filename, int song_number)
             if (events & BTN_PLAY_PAUSE)
             {
                 state = PLAYER_PAUSED;
+                peakmeter_set_play_state(PLAY_STATE_PAUSE);
                 printf("[INFO] Paused\n");
                 AUDIO_FifoClear();
                 usleep(200 * 1000);
@@ -536,6 +540,8 @@ PlayResult play_PCM(const char *filename, int song_number)
             return PLAY_RESULT_ERROR;
         }
 
+        peakmeter_write_audio_sample(sample_l);
+        apply_volume_if_changed();
         AUDIO_DacFifoSetData(sample_l, sample_r);
 
         frames_played++;

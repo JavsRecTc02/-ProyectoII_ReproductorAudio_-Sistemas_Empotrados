@@ -21,6 +21,7 @@
 #include "display_control.h"
 #include "switch_control.h"
 #include "led_control.h"
+#include "volume_peakmeter.h"
 
 #define HW_REGS_BASE (ALT_STM_OFST)
 #define HW_REGS_SPAN (0x04000000)
@@ -204,6 +205,20 @@ static int get_pcm_file(const char *input_file, char *pcm_file, size_t pcm_file_
     return 0;
 }
 
+void apply_volume_if_changed(void)
+{
+    static uint8_t last_volume = 255;
+    uint8_t vol = peakmeter_get_volume();
+
+    if (vol == last_volume)
+        return;
+
+    last_volume = vol;
+    int wm_vol = 0x30 + (int)(vol * (0x7F - 0x30) / 31);
+    AUDIO_SetLineOutVol(wm_vol, wm_vol);
+    printf("[INFO] Volumen: %d/31 (WM8731: 0x%02X)\n", vol, wm_vol);
+}
+
 int main(int argc, char **argv)
 {
     void *virtual_base;
@@ -261,6 +276,8 @@ int main(int argc, char **argv)
     ((unsigned long)(ALT_LWFPGASLVS_OFST + LED_PIO_BASE) &
      (unsigned long)(HW_REGS_MASK));
 
+    peakmeter_init((void *)h2p_lw_axi_addr);
+
     printf("[INFO] i2c_audio_addr:  %04Xh\n", (unsigned int)oc_i2c_audio_addr);
     printf("[INFO] audio_addr:      %04Xh\n", (unsigned int)audio_addr);
     printf("[INFO] button_pio_addr: %04Xh\n", (unsigned int)button_pio_addr);
@@ -275,7 +292,7 @@ int main(int argc, char **argv)
     switches_init();
     leds_init();
     display_init();
-
+    peakmeter_set_play_state(PLAY_STATE_STOP);
 
     usleep(500 * 1000); // Delay necesario antes de iniciar reproducción
 
@@ -305,12 +322,12 @@ int main(int argc, char **argv)
     printf("[INFO] Playlist loaded\n");
     printf("[INFO] Songs found: %d\n", song_count);
 
-	int i;
+    int i;
 
-	for (i = 0; i < song_count; i++)
-	{
-		printf("[INFO] Song %d: %s\n", i + 1, songs[i]);
-	}
+    for (i = 0; i < song_count; i++)
+    {
+        printf("[INFO] Song %d: %s\n", i + 1, songs[i]);
+    }
 
     printf("\n[INFO] Controls:\n");
     printf("       KEY0: Play/Pause\n");
@@ -346,7 +363,12 @@ int main(int argc, char **argv)
             duration_seconds / 60,
             duration_seconds % 60);
 
+        peakmeter_set_play_state(PLAY_STATE_PLAY);
+        apply_volume_if_changed();
+
         PlayResult result = play_PCM(pcm_file, current_song + 1);
+
+        peakmeter_set_play_state(PLAY_STATE_STOP);
 
         if (result == PLAY_RESULT_FINISHED)
         {
@@ -381,6 +403,7 @@ int main(int argc, char **argv)
     }
 
     led_filter_off();
+    peakmeter_set_play_state(PLAY_STATE_STOP);
     printf("[INFO] Player stopped\n");
 
     if (munmap(virtual_base, HW_REGS_SPAN) != 0)
@@ -393,4 +416,3 @@ int main(int argc, char **argv)
     close(fd);
     return return_code;
 }
-

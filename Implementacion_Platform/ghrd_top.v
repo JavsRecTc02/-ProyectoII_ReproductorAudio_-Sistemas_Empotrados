@@ -183,8 +183,9 @@ module ghrd_top(
   wire [27:0] hex_low_export;
   wire [13:0] hex_high_export;
 // connection of internal logics
-  assign LEDR[9:1] = fpga_led_internal;
-  assign stm_hw_events    = {{4{1'b0}}, SW, fpga_led_internal, fpga_debounced_buttons};
+wire [9:0] peakmeter_leds;
+  assign LEDR = peakmeter_leds;
+  assign stm_hw_events = {{4{1'b0}}, SW, fpga_led_internal, fpga_debounced_buttons};
   assign fpga_clk_50=CLOCK_50;
 // Time
   assign HEX0 = hex_low_export[6:0];
@@ -300,7 +301,11 @@ soc_system u0 (
         .oc_i2c_master_0_conduit_start_export_scl (FPGA_I2C_SCLK), //  oc_i2c_master_0_conduit_start.export_scl
         .oc_i2c_master_0_conduit_start_export_sda (FPGA_I2C_SDAT),  //                               .export_sda
 		  .hex_low_pio_external_connection_export   (hex_low_export), // Internal PIO - 7segments
-		  .hex_high_pio_external_connection_export  (hex_high_export)
+		  .hex_high_pio_external_connection_export  (hex_high_export),
+        // Volume & Peak Meter
+        .volume_peakmeter_0_external_signals_enc_a (GPIO_0[0]),
+        .volume_peakmeter_0_external_signals_enc_b (GPIO_0[1]),
+        .volume_peakmeter_0_external_signals_leds  (peakmeter_leds)
     );
   
 // Debounce logic to clean out glitches within 1ms
@@ -350,27 +355,6 @@ altera_edge_detector pulse_debug_reset (
   defparam pulse_debug_reset.PULSE_EXT = 32;
   defparam pulse_debug_reset.EDGE_TYPE = 1;
   defparam pulse_debug_reset.IGNORE_RST_WHILE_BUSY = 1;
-  
-reg [25:0] counter; 
-reg  led_level;
-always @(posedge fpga_clk_50 or negedge hps_fpga_reset_n)
-begin
-if(~hps_fpga_reset_n)
-begin
-                counter<=0;
-                led_level<=0;
-end
-
-else if(counter==24999999)
-        begin
-                counter<=0;
-                led_level<=~led_level;
-        end
-else
-                counter<=counter+1'b1;
-end
-
-assign LEDR[0]=led_level;
 
 endmodule
 
