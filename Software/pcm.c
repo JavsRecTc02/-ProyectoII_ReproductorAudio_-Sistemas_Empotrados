@@ -49,6 +49,7 @@ typedef enum {
     META_COUNT
 } MetaField;
 
+
 #define PCM_SAMPLE_RATE 32000
 
 typedef enum
@@ -57,32 +58,65 @@ typedef enum
     PLAYER_PAUSED
 } PlayerState;
 
+static const char *meta_field_name(MetaField field)
+{
+    switch (field)
+    {
+        case META_TITLE:    return "TITLE";
+        case META_ARTIST:   return "ARTIST";
+        case META_ALBUM:    return "ALBUM";
+        case META_DURATION: return "DURATION";
+        default:            return "UNKNOWN";
+    }
+}
+
 static void lcd_show_meta(const WavMetadata *meta, MetaField field)
 {
+    char line1[17];
     char line2[17];
+
+    memset(line1, 0, sizeof(line1));
+    memset(line2, 0, sizeof(line2));
 
     lcd_clear();
 
     switch (field)
     {
         case META_TITLE:
-            lcd_set_cursor(0, 0); lcd_print("Titulo:");
-            strncpy(line2, meta->title, 16); break;
+            snprintf(line1, sizeof(line1), "Titulo:");
+            strncpy(line2, meta->title, 16);
+            break;
+
         case META_ARTIST:
-            lcd_set_cursor(0, 0); lcd_print("Artista:");
-            strncpy(line2, meta->artist, 16); break;
+            snprintf(line1, sizeof(line1), "Artista:");
+            strncpy(line2, meta->artist, 16);
+            break;
+
         case META_ALBUM:
-            lcd_set_cursor(0, 0); lcd_print("Album:");
-            strncpy(line2, meta->album, 16); break;
+            snprintf(line1, sizeof(line1), "Album:");
+            strncpy(line2, meta->album, 16);
+            break;
+
         case META_DURATION:
-            lcd_set_cursor(0, 0); lcd_print("Duracion:");
-            snprintf(line2, 17, "%02d:%02d",
+            snprintf(line1, sizeof(line1), "Duracion:");
+            snprintf(line2, sizeof(line2), "%02d:%02d",
                      meta->duration_seconds / 60,
-                     meta->duration_seconds % 60); break;
-        default: return;
+                     meta->duration_seconds % 60);
+            break;
+
+        default:
+            return;
     }
 
+    line1[16] = '\0';
     line2[16] = '\0';
+
+    printf("[LCD] field=%s | line1=\"%s\" | line2=\"%s\"\n",
+           meta_field_name(field), line1, line2);
+
+    lcd_set_cursor(0, 0);
+    lcd_print(line1);
+
     lcd_set_cursor(0, 1);
     lcd_print(line2);
 }
@@ -106,7 +140,6 @@ static void wav_get_path_from_pcm(const char *pcm_path,
     if (len > 4 && strcmp(wav_path + len - 4, ".pcm") == 0)
         wav_path[len - 4] = '\0';
 }
-
 
 static void wav_parse_metadata(const char *wav_path, WavMetadata *meta)
 {
@@ -210,7 +243,7 @@ static void wav_parse_metadata(const char *wav_path, WavMetadata *meta)
     data_size = (uint32_t)(buf[40] | (buf[41] << 8) |
                            (buf[42] << 16) | (buf[43] << 24));
 
-    /* Calcular duracion */
+    /* Calcular duracion
     if (meta->sample_rate > 0 && meta->num_channels > 0 &&
         meta->bits_per_sample > 0)
     {
@@ -220,7 +253,7 @@ static void wav_parse_metadata(const char *wav_path, WavMetadata *meta)
 
         if (bytes_per_second > 0)
             meta->duration_seconds = (int)(data_size / bytes_per_second);
-    }
+    }*/
 
     /*
      * Intentar leer chunks LIST/INFO para metadata de texto.
@@ -390,7 +423,11 @@ PlayResult play_PCM(const char *filename, int song_number)
 
     wav_get_path_from_pcm(filename, wav_path, sizeof(wav_path));
     wav_parse_metadata(wav_path, &meta);
-    lcd_show_meta(&meta, META_TITLE);
+    meta.duration_seconds = display_get_pcm_duration_seconds(filename);
+    MetaField current_field = META_TITLE;
+    int pause_lcd_counter = 0;
+
+    lcd_show_meta(&meta, current_field);
 
     printf("\n");
     printf("========================================\n");
@@ -409,6 +446,7 @@ PlayResult play_PCM(const char *filename, int song_number)
     uint32_t frames_played = 0;
     int elapsed_seconds = 0;
     int last_displayed_second = -1;
+    int last_lcd_meta_second = 0;
 
     display_show_song_time(song_number, 0);
 
@@ -435,13 +473,6 @@ PlayResult play_PCM(const char *filename, int song_number)
     while (1)
     {
         uint32_t events = buttons_get_events();
-        /* Boton del encoder: navegar metadatos en LCD */
-        if (peakmeter_get_button_event())
-        {
-            peakmeter_clear_button_event();  // W1C
-            current_field = (MetaField)((current_field + 1) % META_COUNT);
-            lcd_show_meta(&meta, current_field);
-        }
 
         if ((frames_played % 1024) == 0)
         {
@@ -469,12 +500,18 @@ PlayResult play_PCM(const char *filename, int song_number)
                 peakmeter_set_play_state(PLAY_STATE_PAUSE);
                 printf("[INFO] Paused\n");
                 AUDIO_FifoClear();
+                pause_lcd_counter = 0;
+                current_field = META_TITLE;
+                lcd_show_meta(&meta, current_field);
             }
             else
             {
                 state = PLAYER_PLAYING;
                 peakmeter_set_play_state(PLAY_STATE_PLAY);
                 printf("[INFO] Playing\n");
+                pause_lcd_counter = 0;
+                current_field = META_TITLE;
+                lcd_show_meta(&meta, current_field);
             }
 
             usleep(200 * 1000); // debounce
@@ -507,6 +544,19 @@ PlayResult play_PCM(const char *filename, int song_number)
         if (state == PLAYER_PAUSED)
         {
             usleep(10 * 1000);
+            pause_lcd_counter++;
+
+            /*
+            * 10 ms * 500 = 3 segundos
+            */
+            if (pause_lcd_counter >= 300)
+            {
+                pause_lcd_counter = 0;
+
+                current_field = (MetaField)((current_field + 1) % META_COUNT);
+                lcd_show_meta(&meta, current_field);
+            }
+
             continue;
         }
 
@@ -543,6 +593,9 @@ PlayResult play_PCM(const char *filename, int song_number)
                 peakmeter_set_play_state(PLAY_STATE_PAUSE);
                 printf("[INFO] Paused\n");
                 AUDIO_FifoClear();
+                pause_lcd_counter = 0;
+                current_field = META_TITLE;
+                lcd_show_meta(&meta, current_field);
                 usleep(200 * 1000);
                 break;
             }
@@ -599,5 +652,6 @@ PlayResult play_PCM(const char *filename, int song_number)
             display_show_song_time(song_number, elapsed_seconds);
             last_displayed_second = elapsed_seconds;
         }
+
     }
 }

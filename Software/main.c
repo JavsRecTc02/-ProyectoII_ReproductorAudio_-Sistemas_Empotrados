@@ -206,20 +206,6 @@ static int get_pcm_file(const char *input_file, char *pcm_file, size_t pcm_file_
     return 0;
 }
 
-void apply_volume_if_changed(void)
-{
-    static uint8_t last_volume = 255;
-    uint8_t vol = peakmeter_get_volume();
-
-    if (vol == last_volume)
-        return;
-
-    last_volume = vol;
-    int wm_vol = 0x30 + (int)(vol * (0x7F - 0x30) / 31);
-    AUDIO_SetLineOutVol(wm_vol, wm_vol);
-    printf("[INFO] Volumen: %d/31 (WM8731: 0x%02X)\n", vol, wm_vol);
-}
-
 int main(int argc, char **argv)
 {
     void *virtual_base;
@@ -282,6 +268,14 @@ int main(int argc, char **argv)
     lcd_clear();
     lcd_print_centered(0, "ReproductorAudio");
     lcd_print_centered(1, "Iniciando...");
+
+    printf("[LCD TEST] Writing static LCD test...\n");
+    lcd_clear();
+    lcd_set_cursor(0, 0);
+    lcd_print("LCD TEST LINE 1");
+    lcd_set_cursor(0, 1);
+    lcd_print("LCD TEST LINE 2");
+    sleep(3);
 
     printf("[INFO] i2c_audio_addr:  %04Xh\n", (unsigned int)oc_i2c_audio_addr);
     printf("[INFO] audio_addr:      %04Xh\n", (unsigned int)audio_addr);

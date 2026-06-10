@@ -128,10 +128,21 @@ static uint8_t i2c_write_byte(uint8_t byte)
 
 static void i2c_send(uint8_t data)
 {
+    uint8_t ack_addr;
+    uint8_t ack_data;
+
     i2c_start();
-    i2c_write_byte(LCD_I2C_ADDR << 1); /* direccion + write bit */
-    i2c_write_byte(data);
+
+    ack_addr = i2c_write_byte(LCD_I2C_ADDR << 1);
+    ack_data = i2c_write_byte(data);
+
     i2c_stop();
+
+    if (ack_addr || ack_data)
+    {
+        printf("[LCD][I2C WARN] NACK addr=%u data=%u byte=0x%02X\n",
+               ack_addr, ack_data, data);
+    }
 }
 
 /* ================================================================
@@ -187,10 +198,13 @@ void lcd_init(void *lw_bridge_base)
     );
 
     /* Iniciar con ambos pines como output en alto */
-    alt_write_word(lcd_pio_addr + PIO_DATA_REG, 0x3);
-    alt_write_word(lcd_pio_addr + PIO_DIR_REG, 0x3);
+    alt_write_word(lcd_pio_addr + PIO_DATA_REG, 0x0);
+    alt_write_word(lcd_pio_addr + PIO_DIR_REG, 0x0);
 
-    usleep(50000); /* esperar 50ms para que suba VCC de la LCD */
+    sda_high();
+    scl_high();
+
+    usleep(50000);
 
     /* Secuencia de inicializacion en modo 4 bits (HD44780) */
     lcd_send_nibble(0x3, 0); usleep(5000);
