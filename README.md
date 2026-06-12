@@ -69,7 +69,42 @@ El proyecto está compuesto por dos partes principales:
    * Ejecución desde la consola Linux de la DE1-SoC (daemon).
 
 ---
+## Diagramas de Arquitectura y Organización del Sistema
 
+Esta sección presenta los principales diagramas utilizados para documentar la arquitectura del reproductor de audio. Los diagramas permiten visualizar la partición hardware/software del sistema, la organización modular de la aplicación en C y el mapa de memoria utilizado para acceder a los periféricos implementados en FPGA mediante MMIO desde el HPS.
+
+Para más información técnica y de diseño, consultar el documento completo en:  
+[Documentación Técnica de Diseño](docs/DocumentoTécnicoDiseño_ProyectoII.pdf)
+
+### Diagrama de co-diseño hardware/software
+
+El sistema se organiza bajo un enfoque de co-diseño hardware/software, donde las tareas con requerimientos de baja latencia o interacción directa con periféricos se implementan en la FPGA, mientras que las tareas de mayor flexibilidad se ejecutan en el HPS sobre Linux embebido.  
+La FPGA contiene los periféricos generados en Platform Designer, incluyendo la interfaz de audio, PIOs, módulo de peakmeter, control de volumen e interfaces de entrada/salida. Por su parte, el HPS ejecuta la aplicación principal en C, encargada de cargar la playlist, convertir archivos de audio con FFmpeg, reproducir PCM, aplicar filtros DSP por software y coordinar el acceso a los periféricos mediante `mmap()`.
+
+A continuación se muestra el diagrama de co-diseño del sistema:
+
+![Diagrama de co-diseño hardware/software](docs/Co-design.png)
+
+### Diagrama de organización de software
+
+El software del sistema se divide en módulos especializados. El archivo `main.c` se encarga de la inicialización general del sistema, el mapeo de memoria, la carga de la playlist y la coordinación del ciclo principal de reproducción.  
+La lógica de reproducción se concentra en `pcm.c`, donde se leen las muestras PCM, se aplican filtros de audio, se gestionan los eventos de botones y se actualizan los periféricos de salida como displays de 7 segmentos, LCD, LEDs y peakmeter. Los demás archivos actúan como controladores específicos para cada periférico o funcionalidad del sistema.
+
+A continuación se muestra el diagrama de organización de software:
+
+![Diagrama de organización de software](docs/Software_diagram.jpg)
+
+### Mapa de memoria
+
+El acceso a los periféricos de la FPGA se realiza desde el HPS mediante direcciones MMIO expuestas a través del Lightweight HPS-to-FPGA Bridge. El mapa de memoria fue optimizado para agrupar los periféricos en un rango compacto, reduciendo espacios desperdiciados y facilitando el mantenimiento de las direcciones generadas en `hps_0.h`.
+
+Este mapa incluye periféricos como la interfaz de audio, el módulo I2C, el peakmeter, la LCD mediante PIO bidireccional, LEDs, switches, botones y displays de 7 segmentos. Cada módulo cuenta con una dirección base utilizada por la aplicación en C para leer o escribir sus registros correspondientes.
+
+A continuación se muestra el mapa de memoria utilizado por el sistema:
+
+![Mapa de memoria del sistema](docs/mem_map.png)
+
+---
 ## Implementación del hardware
 
 ### 1. Abrir el proyecto en Quartus
@@ -517,4 +552,9 @@ En este caso, la canción seleccionada es la **08**, y el tiempo de reproducció
 
 - Terasic. (s.f.). *DE1-SoC Development and Education Kit*. Terasic Inc.  
   https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=165&No=836&PartNo=5
+- Intel/Altera. (2018). Cyclone V Hard Processor System Technical Reference Manual.
+- IP cores for the Altera DE1-SoC board.
+ https://www.eecg.utoronto.ca/~pc/courses/241/DE1_SoC_cores/
+- Terasic. (s.f.). *DE1-SoC VIP Demo*. Terasic Inc.  
+  https://download.terasic.com/downloads/demo/de1-soc/DE1_SOC_VIP_demo.pdf
 
