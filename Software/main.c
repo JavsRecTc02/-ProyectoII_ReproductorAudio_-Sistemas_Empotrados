@@ -269,14 +269,6 @@ int main(int argc, char **argv)
     lcd_print_centered(0, "ReproductorAudio");
     lcd_print_centered(1, "Iniciando...");
 
-    printf("[LCD TEST] Writing static LCD test...\n");
-    lcd_clear();
-    lcd_set_cursor(0, 0);
-    lcd_print("LCD TEST LINE 1");
-    lcd_set_cursor(0, 1);
-    lcd_print("LCD TEST LINE 2");
-    sleep(3);
-
     printf("[INFO] i2c_audio_addr:  %04Xh\n", (unsigned int)oc_i2c_audio_addr);
     printf("[INFO] audio_addr:      %04Xh\n", (unsigned int)audio_addr);
     printf("[INFO] button_pio_addr: %04Xh\n", (unsigned int)button_pio_addr);
@@ -293,7 +285,7 @@ int main(int argc, char **argv)
     display_init();
     peakmeter_set_play_state(PLAY_STATE_STOP);
 
-    usleep(500 * 1000); // Delay necesario antes de iniciar reproducción
+    usleep(500 * 1000); // Delay necesario antes de iniciar reprod
 
     AUDIO_SetSampleRate(RATE_ADC32K_DAC32K);
 
