@@ -810,7 +810,7 @@ refer to the applicable agreement for further details.
 		(text "enc_b" (rect 277 1643 584 3296)(font "Arial" (color 0 0 0)))
 		(text "leds" (rect 277 1659 578 3328)(font "Arial" (color 0 0 0)))
 		(text "enc_sw" (rect 277 1675 590 3360)(font "Arial" (color 0 0 0)))
-		(text " soc_system " (rect 696 1696 1464 3402)(font "Arial" ))
+		(text " system " (rect 717 1696 1482 3402)(font "Arial" ))
 		(line (pt 272 32)(pt 480 32)(line_width 1))
 		(line (pt 480 32)(pt 480 1696)(line_width 1))
 		(line (pt 272 1696)(pt 480 1696)(line_width 1))

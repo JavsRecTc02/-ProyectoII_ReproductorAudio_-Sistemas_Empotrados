@@ -45,10 +45,13 @@
 /*
  * Macros for device 'volume_peakmeter_0', class 'volume_peakmeter'
  * The macros are prefixed with 'VOLUME_PEAKMETER_0_'.
+ * The prefix is the slave descriptor.
  */
-#define VOLUME_PEAKMETER_0_BASE 0x40
-#define VOLUME_PEAKMETER_0_SPAN 16
-#define VOLUME_PEAKMETER_0_END  0x4f
+#define VOLUME_PEAKMETER_0_COMPONENT_TYPE volume_peakmeter
+#define VOLUME_PEAKMETER_0_COMPONENT_NAME volume_peakmeter_0
+#define VOLUME_PEAKMETER_0_BASE 0x60
+#define VOLUME_PEAKMETER_0_SPAN 32
+#define VOLUME_PEAKMETER_0_END 0x7f
 
 /* Offsets de registros */
 #define VOLUME_PEAKMETER_STATUS  0x00  /* R    peak_leds [7:0] */
@@ -67,17 +70,39 @@
 #define PLAY_STATE_PLAY  0x1
 #define PLAY_STATE_PAUSE 0x2
 
-/*
- * Macros for device 'lcd_pio', class 'altera_avalon_pio'
- * The macros are prefixed with 'LCD_PIO_'.
- */
-#define LCD_PIO_BASE 0x60
-#define LCD_PIO_SPAN 32
-#define LCD_PIO_END  0x7f
+/* lcd_pio — dirección corregida según Platform Designer */
+#define LCD_PIO_BASE 0x80              // antes: 0x60
+#define LCD_PIO_SPAN 32               // sin cambio
+#define LCD_PIO_END  0x9f             // antes: 0x7f
 
 /* Bits del PIO bidir para LCD I2C */
 #define LCD_SDA_BIT 0  /* GPIO_0[3] */
 #define LCD_SCL_BIT 1  /* GPIO_0[4] */
+
+
+/*
+ * Macros for device 'pio_0', class 'altera_avalon_pio'
+ * The macros are prefixed with 'PIO_0_'.
+ * The prefix is the slave descriptor.
+ */
+#define PIO_0_COMPONENT_TYPE altera_avalon_pio
+#define PIO_0_COMPONENT_NAME pio_0
+#define PIO_0_BASE 0x80
+#define PIO_0_SPAN 32
+#define PIO_0_END 0x9f
+#define PIO_0_BIT_CLEARING_EDGE_REGISTER 0
+#define PIO_0_BIT_MODIFYING_OUTPUT_REGISTER 1
+#define PIO_0_CAPTURE 0
+#define PIO_0_DATA_WIDTH 2
+#define PIO_0_DO_TEST_BENCH_WIRING 0
+#define PIO_0_DRIVEN_SIM_VALUE 0
+#define PIO_0_EDGE_TYPE NONE
+#define PIO_0_FREQ 50000000
+#define PIO_0_HAS_IN 0
+#define PIO_0_HAS_OUT 0
+#define PIO_0_HAS_TRI 1
+#define PIO_0_IRQ_TYPE NONE
+#define PIO_0_RESET_VALUE 0
 
 /*
  * Macros for device 'sysid_qsys', class 'altera_avalon_sysid_qsys'
@@ -86,11 +111,27 @@
  */
 #define SYSID_QSYS_COMPONENT_TYPE altera_avalon_sysid_qsys
 #define SYSID_QSYS_COMPONENT_NAME sysid_qsys
-#define SYSID_QSYS_BASE 0x10000
+#define SYSID_QSYS_BASE 0xa0
 #define SYSID_QSYS_SPAN 8
-#define SYSID_QSYS_END 0x10007
+#define SYSID_QSYS_END 0xa7
 #define SYSID_QSYS_ID 2899645186
-#define SYSID_QSYS_TIMESTAMP 1780264385
+#define SYSID_QSYS_TIMESTAMP 1781135054
+
+/*
+ * Macros for device 'jtag_uart', class 'altera_avalon_jtag_uart'
+ * The macros are prefixed with 'JTAG_UART_'.
+ * The prefix is the slave descriptor.
+ */
+#define JTAG_UART_COMPONENT_TYPE altera_avalon_jtag_uart
+#define JTAG_UART_COMPONENT_NAME jtag_uart
+#define JTAG_UART_BASE 0xb0
+#define JTAG_UART_SPAN 8
+#define JTAG_UART_END 0xb7
+#define JTAG_UART_IRQ 2
+#define JTAG_UART_READ_DEPTH 64
+#define JTAG_UART_READ_THRESHOLD 8
+#define JTAG_UART_WRITE_DEPTH 64
+#define JTAG_UART_WRITE_THRESHOLD 8
 
 /*
  * Macros for device 'led_pio', class 'altera_avalon_pio'
@@ -99,9 +140,9 @@
  */
 #define LED_PIO_COMPONENT_TYPE altera_avalon_pio
 #define LED_PIO_COMPONENT_NAME led_pio
-#define LED_PIO_BASE 0x10040
+#define LED_PIO_BASE 0xd0
 #define LED_PIO_SPAN 16
-#define LED_PIO_END 0x1004f
+#define LED_PIO_END 0xdf
 #define LED_PIO_BIT_CLEARING_EDGE_REGISTER 0
 #define LED_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define LED_PIO_CAPTURE 0
@@ -117,15 +158,63 @@
 #define LED_PIO_RESET_VALUE 15
 
 /*
+ * Macros for device 'hex_low_pio', class 'altera_avalon_pio'
+ * The macros are prefixed with 'HEX_LOW_PIO_'.
+ * The prefix is the slave descriptor.
+ */
+#define HEX_LOW_PIO_COMPONENT_TYPE altera_avalon_pio
+#define HEX_LOW_PIO_COMPONENT_NAME hex_low_pio
+#define HEX_LOW_PIO_BASE 0xe0
+#define HEX_LOW_PIO_SPAN 16
+#define HEX_LOW_PIO_END 0xef
+#define HEX_LOW_PIO_BIT_CLEARING_EDGE_REGISTER 0
+#define HEX_LOW_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define HEX_LOW_PIO_CAPTURE 0
+#define HEX_LOW_PIO_DATA_WIDTH 28
+#define HEX_LOW_PIO_DO_TEST_BENCH_WIRING 0
+#define HEX_LOW_PIO_DRIVEN_SIM_VALUE 0
+#define HEX_LOW_PIO_EDGE_TYPE NONE
+#define HEX_LOW_PIO_FREQ 50000000
+#define HEX_LOW_PIO_HAS_IN 0
+#define HEX_LOW_PIO_HAS_OUT 1
+#define HEX_LOW_PIO_HAS_TRI 0
+#define HEX_LOW_PIO_IRQ_TYPE NONE
+#define HEX_LOW_PIO_RESET_VALUE 0
+
+/*
+ * Macros for device 'hex_high_pio', class 'altera_avalon_pio'
+ * The macros are prefixed with 'HEX_HIGH_PIO_'.
+ * The prefix is the slave descriptor.
+ */
+#define HEX_HIGH_PIO_COMPONENT_TYPE altera_avalon_pio
+#define HEX_HIGH_PIO_COMPONENT_NAME hex_high_pio
+#define HEX_HIGH_PIO_BASE 0xf0
+#define HEX_HIGH_PIO_SPAN 16
+#define HEX_HIGH_PIO_END 0xff
+#define HEX_HIGH_PIO_BIT_CLEARING_EDGE_REGISTER 0
+#define HEX_HIGH_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define HEX_HIGH_PIO_CAPTURE 0
+#define HEX_HIGH_PIO_DATA_WIDTH 14
+#define HEX_HIGH_PIO_DO_TEST_BENCH_WIRING 0
+#define HEX_HIGH_PIO_DRIVEN_SIM_VALUE 0
+#define HEX_HIGH_PIO_EDGE_TYPE NONE
+#define HEX_HIGH_PIO_FREQ 50000000
+#define HEX_HIGH_PIO_HAS_IN 0
+#define HEX_HIGH_PIO_HAS_OUT 1
+#define HEX_HIGH_PIO_HAS_TRI 0
+#define HEX_HIGH_PIO_IRQ_TYPE NONE
+#define HEX_HIGH_PIO_RESET_VALUE 0
+
+/*
  * Macros for device 'dipsw_pio', class 'altera_avalon_pio'
  * The macros are prefixed with 'DIPSW_PIO_'.
  * The prefix is the slave descriptor.
  */
 #define DIPSW_PIO_COMPONENT_TYPE altera_avalon_pio
 #define DIPSW_PIO_COMPONENT_NAME dipsw_pio
-#define DIPSW_PIO_BASE 0x10080
+#define DIPSW_PIO_BASE 0x100
 #define DIPSW_PIO_SPAN 16
-#define DIPSW_PIO_END 0x1008f
+#define DIPSW_PIO_END 0x10f
 #define DIPSW_PIO_IRQ 0
 #define DIPSW_PIO_BIT_CLEARING_EDGE_REGISTER 1
 #define DIPSW_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
@@ -148,9 +237,9 @@
  */
 #define BUTTON_PIO_COMPONENT_TYPE altera_avalon_pio
 #define BUTTON_PIO_COMPONENT_NAME button_pio
-#define BUTTON_PIO_BASE 0x100c0
+#define BUTTON_PIO_BASE 0x110
 #define BUTTON_PIO_SPAN 16
-#define BUTTON_PIO_END 0x100cf
+#define BUTTON_PIO_END 0x11f
 #define BUTTON_PIO_IRQ 1
 #define BUTTON_PIO_BIT_CLEARING_EDGE_REGISTER 1
 #define BUTTON_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
@@ -165,70 +254,6 @@
 #define BUTTON_PIO_HAS_TRI 0
 #define BUTTON_PIO_IRQ_TYPE EDGE
 #define BUTTON_PIO_RESET_VALUE 0
-
-/*
- * Macros for device 'hex_low_pio', class 'altera_avalon_pio'
- * The macros are prefixed with 'HEX_LOW_PIO_'.
- * The prefix is the slave descriptor.
- */
-#define HEX_LOW_PIO_COMPONENT_TYPE altera_avalon_pio
-#define HEX_LOW_PIO_COMPONENT_NAME hex_low_pio
-#define HEX_LOW_PIO_BASE 0x10100
-#define HEX_LOW_PIO_SPAN 16
-#define HEX_LOW_PIO_END 0x1010f
-#define HEX_LOW_PIO_BIT_CLEARING_EDGE_REGISTER 0
-#define HEX_LOW_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
-#define HEX_LOW_PIO_CAPTURE 0
-#define HEX_LOW_PIO_DATA_WIDTH 28
-#define HEX_LOW_PIO_DO_TEST_BENCH_WIRING 0
-#define HEX_LOW_PIO_DRIVEN_SIM_VALUE 0
-#define HEX_LOW_PIO_EDGE_TYPE NONE
-#define HEX_LOW_PIO_FREQ 50000000
-#define HEX_LOW_PIO_HAS_IN 0
-#define HEX_LOW_PIO_HAS_OUT 1
-#define HEX_LOW_PIO_HAS_TRI 0
-#define HEX_LOW_PIO_IRQ_TYPE NONE
-#define HEX_LOW_PIO_RESET_VALUE 0
-
-/*
- * Macros for device 'hex_high_pio', class 'altera_avalon_pio'
- * The macros are prefixed with 'HEX_HIGH_PIO_'.
- * The prefix is the slave descriptor.
- */
-#define HEX_HIGH_PIO_COMPONENT_TYPE altera_avalon_pio
-#define HEX_HIGH_PIO_COMPONENT_NAME hex_high_pio
-#define HEX_HIGH_PIO_BASE 0x10140
-#define HEX_HIGH_PIO_SPAN 16
-#define HEX_HIGH_PIO_END 0x1014f
-#define HEX_HIGH_PIO_BIT_CLEARING_EDGE_REGISTER 0
-#define HEX_HIGH_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
-#define HEX_HIGH_PIO_CAPTURE 0
-#define HEX_HIGH_PIO_DATA_WIDTH 14
-#define HEX_HIGH_PIO_DO_TEST_BENCH_WIRING 0
-#define HEX_HIGH_PIO_DRIVEN_SIM_VALUE 0
-#define HEX_HIGH_PIO_EDGE_TYPE NONE
-#define HEX_HIGH_PIO_FREQ 50000000
-#define HEX_HIGH_PIO_HAS_IN 0
-#define HEX_HIGH_PIO_HAS_OUT 1
-#define HEX_HIGH_PIO_HAS_TRI 0
-#define HEX_HIGH_PIO_IRQ_TYPE NONE
-#define HEX_HIGH_PIO_RESET_VALUE 0
-
-/*
- * Macros for device 'jtag_uart', class 'altera_avalon_jtag_uart'
- * The macros are prefixed with 'JTAG_UART_'.
- * The prefix is the slave descriptor.
- */
-#define JTAG_UART_COMPONENT_TYPE altera_avalon_jtag_uart
-#define JTAG_UART_COMPONENT_NAME jtag_uart
-#define JTAG_UART_BASE 0x20000
-#define JTAG_UART_SPAN 8
-#define JTAG_UART_END 0x20007
-#define JTAG_UART_IRQ 2
-#define JTAG_UART_READ_DEPTH 64
-#define JTAG_UART_READ_THRESHOLD 8
-#define JTAG_UART_WRITE_DEPTH 64
-#define JTAG_UART_WRITE_THRESHOLD 8
 
 
 #endif /* _ALTERA_HPS_0_H_ */

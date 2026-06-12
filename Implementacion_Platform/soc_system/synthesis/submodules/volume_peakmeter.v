@@ -135,6 +135,12 @@ reg [7:0]  peak_hold_cnt;
 reg [7:0]  peak_leds;
 reg [15:0] abs_s;
 
+reg [19:0] sw_debounce_cnt;
+reg        enc_sw_db;
+reg        enc_sw_last;
+reg        enc_sw_prev;
+reg        enc_sw_event;
+
 always @(posedge clk or posedge reset) begin
     if (reset) begin
         peak_val      <= 0;
@@ -234,11 +240,6 @@ end
 // El boton es activo bajo (LOW cuando presionado).
 // Debounce de 20ms = 1,000,000 ciclos a 50MHz.
 // ================================================================
-reg [19:0] sw_debounce_cnt;
-reg        enc_sw_db;
-reg        enc_sw_last;
-reg        enc_sw_prev;
-reg        enc_sw_event; // pulso de un ciclo al detectar press
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
@@ -246,22 +247,27 @@ always @(posedge clk or posedge reset) begin
         enc_sw_db       <= 1'b1;
         enc_sw_last     <= 1'b1;
         enc_sw_prev     <= 1'b1;
-        enc_sw_event    <= 1'b0;
     end else begin
-        enc_sw_event <= 1'b0;
-
         if (enc_sw != enc_sw_last) begin
             sw_debounce_cnt <= 0;
             enc_sw_last     <= enc_sw;
         end else if (sw_debounce_cnt < 20'd1_000_000) begin
             sw_debounce_cnt <= sw_debounce_cnt + 1;
         end else begin
-            enc_sw_db <= enc_sw_last;
-            // Detectar flanco bajante (press)
-            if (enc_sw_prev && !enc_sw_db)
-                enc_sw_event <= 1'b1;
+            enc_sw_db   <= enc_sw_last;
             enc_sw_prev <= enc_sw_db;
         end
+    end
+end
+
+// Registro W1C para el evento del boton
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        enc_sw_event <= 1'b0;
+    end else if (write && address == 3'h4 && writedata[0]) begin
+        enc_sw_event <= 1'b0;  // W1C: escribir 1 para limpiar
+    end else if (enc_sw_prev && !enc_sw_db) begin
+        enc_sw_event <= 1'b1;  // setear al detectar flanco bajante
     end
 end
 

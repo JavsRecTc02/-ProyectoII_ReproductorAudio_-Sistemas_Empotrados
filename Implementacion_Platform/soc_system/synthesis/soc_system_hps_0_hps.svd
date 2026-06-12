@@ -219300,7 +219300,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
    <access>read-write</access>
   </peripheral>
  <peripheral>
-      <name>altera_avalon_jtag_uart_jtag_uart_avalon_jtag_slave</name><baseAddress>0xff220000</baseAddress> 
+      <name>altera_avalon_jtag_uart_jtag_uart_avalon_jtag_slave</name><baseAddress>0xff2000b0</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>8</size>
@@ -219387,7 +219387,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
      </register>            
     </registers>
    </peripheral><peripheral>
-      <name>altera_avalon_sysid_sysid_qsys_control_slave</name><baseAddress>0xff210000</baseAddress> 
+      <name>altera_avalon_sysid_sysid_qsys_control_slave</name><baseAddress>0xff2000a0</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>8</size>
@@ -219418,7 +219418,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
          <addressOffset>0x4</addressOffset>
          <size>32</size>
          <access>read-only</access>
-         <resetValue>0x6a27d37e</resetValue>
+         <resetValue>0x6a29f6ce</resetValue>
          <resetMask>0xffffffff</resetMask> 
          <fields>
            <field><name>timestamp</name>
@@ -219430,7 +219430,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
      </register>            
     </registers>
    </peripheral><peripheral>
-      <name>altera_avalon_pio_led_pio_s1</name><baseAddress>0xff210040</baseAddress> 
+      <name>altera_avalon_pio_led_pio_s1</name><baseAddress>0xff2000d0</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -219547,7 +219547,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
      </register>            
     </registers>
    </peripheral><peripheral>
-      <name>altera_avalon_pio_dipsw_pio_s1</name><baseAddress>0xff210080</baseAddress> 
+      <name>altera_avalon_pio_dipsw_pio_s1</name><baseAddress>0xff200100</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -219664,7 +219664,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
      </register>            
     </registers>
    </peripheral><peripheral>
-      <name>altera_avalon_pio_button_pio_s1</name><baseAddress>0xff2100c0</baseAddress> 
+      <name>altera_avalon_pio_button_pio_s1</name><baseAddress>0xff200110</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -219781,7 +219781,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
      </register>            
     </registers>
    </peripheral><peripheral>
-      <name>altera_avalon_pio_hex_low_pio_s1</name><baseAddress>0xff210100</baseAddress> 
+      <name>altera_avalon_pio_hex_low_pio_s1</name><baseAddress>0xff2000e0</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -219898,7 +219898,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
      </register>            
     </registers>
    </peripheral><peripheral>
-      <name>altera_avalon_pio_hex_high_pio_s1</name><baseAddress>0xff210140</baseAddress> 
+      <name>altera_avalon_pio_hex_high_pio_s1</name><baseAddress>0xff2000f0</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -220015,7 +220015,7 @@ The name of this register in ARM documentation is BWFIFO4 for writes and BRFIFO4
      </register>            
     </registers>
    </peripheral><peripheral>
-      <name>altera_avalon_pio_pio_0_s1</name><baseAddress>0xff200060</baseAddress> 
+      <name>altera_avalon_pio_pio_0_s1</name><baseAddress>0xff200080</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
